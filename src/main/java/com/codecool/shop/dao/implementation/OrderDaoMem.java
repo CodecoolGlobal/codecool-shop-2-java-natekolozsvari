@@ -10,14 +10,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class OrderDaoMem implements OrderDao {
-    private Map<Product, Integer> shoppingCart;
-    private float price;
+    private Map<Product, Integer> shoppingCart = new HashMap<>();
+    private float price = 0;
     private static OrderDaoMem instance = null;
 
-    public OrderDaoMem() {
-        shoppingCart = new HashMap<>();
-        price = 0;
+    private OrderDaoMem() {
     }
+
 
     public static OrderDaoMem getInstance() {
         if (instance == null) {

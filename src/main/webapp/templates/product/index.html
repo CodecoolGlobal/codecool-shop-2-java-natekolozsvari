@@ -60,7 +60,9 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="btn btn-success" th:data-name="${prod.name}"
+                           th:data-defaultP="${prod.getDefaultPrice()}" th:data-defaultC="${prod.getDefaultCurrency()}" th:data-productC="${prod.getProductCategory()}"
+                        th:data-supplier="${prod.getSupplier()}">Add to cart</a>
                     </div>
                 </div>
             </div>
@@ -86,7 +88,9 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="btn btn-success" th:data-name="${prod.name}"
+                           th:data-defaultP="${prod.getDefaultPrice()}" th:data-defaultC="${prod.getDefaultCurrency()}" th:data-productC="${prod.getProductCategory()}"
+                           th:data-supplier="${prod.getSupplier()}">Add to cart</a>
                     </div>
                 </div>
             </div>
@@ -112,7 +116,9 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="btn btn-success" th:data-name="${prod.name}"
+                           th:data-defaultP="${prod.getDefaultPrice()}" th:data-defaultC="${prod.getDefaultCurrency()}" th:data-productC="${prod.getProductCategory()}"
+                           th:data-supplier="${prod.getSupplier()}">Add to cart</a>
                     </div>
                 </div>
             </div>
