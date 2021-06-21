@@ -42,11 +42,11 @@
 
 <div class="container">
     <div class="card">
-        <strong th:text="${vehicle.name}">Category Title</strong>
+        <strong th:text="${toy.name}">Category Title</strong>
     </div>
 
     <div id="vehicles" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${vehicles}">
+        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${toys}">
             <div class="card">
                 <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="card-header">
@@ -68,11 +68,11 @@
 </div>
 <div class="container">
     <div class="card">
-        <strong th:text="${toy.name}">Category Title</strong>
+        <strong th:text="${vehicle.name}">Category Title</strong>
     </div>
 
     <div id="toys" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${toys}">
+        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${vehicles}">
             <div class="card">
                 <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="card-header">
