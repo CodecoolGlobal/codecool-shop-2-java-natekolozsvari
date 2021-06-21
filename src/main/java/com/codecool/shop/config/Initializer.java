@@ -24,18 +24,33 @@ public class Initializer implements ServletContextListener {
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         //setting up a new supplier
-        Supplier amazon = new Supplier("Amazon", "Digital content and services");
-        supplierDataStore.add(amazon);
-        Supplier lenovo = new Supplier("Lenovo", "Computers");
-        supplierDataStore.add(lenovo);
+        Supplier garrison = new Supplier("Garrison Corp.", "Mr. Garrison's Corporation supplier of futuristic vehicles");
+        supplierDataStore.add(garrison);
+        Supplier wacky = new Supplier("Wacky Co.", "Supplier of the wild wacky action bike");
+        supplierDataStore.add(wacky);
+        Supplier southpark = new Supplier("SouthPark Toys Inc.", "Creator of the best seller toys");
+        supplierDataStore.add(southpark);
+        Supplier cartman = new Supplier("Cartman Ltd.", "Maker of top hit songs in USA");
+        supplierDataStore.add(cartman);
+
+
 
         //setting up a new product category
-        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        productCategoryDataStore.add(tablet);
+        ProductCategory vehicle = new ProductCategory("Vehicle", "Vehicle", "A vehicle that can get you from A to B (or not)");
+        productCategoryDataStore.add(vehicle);
+        ProductCategory toys = new ProductCategory("Toys", "Toy maker", "Toys for kids and adults only");
+        productCategoryDataStore.add(toys);
+        ProductCategory music = new ProductCategory("Music", "Pan flute/Christian rock", "Music for the whole family (if they are christians)");
+        productCategoryDataStore.add(music);
+
 
         //setting up products and printing it
-        productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
-        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
-        productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
+        productDataStore.add(new Product("STOP touching me ELMO", 29.97f, "USD", "Elmo says inappropriate catchphrases, the doll also has a toothpaste dispenser.", toys, southpark));
+        productDataStore.add(new Product("Wild Wacky action bike", 150, "USD", "The bike is require the rider to steer the front and rear wheels simultaneously, making it almost impossible to steer in the right direction. It also sports two more wheels, one that is oblong and makes the bike prone to being slow and rocky while in use while the smaller of the two merely keeps it balanced. It also glows in the dark..", vehicle, wacky));
+        productDataStore.add(new Product("Alabama Man", 15, "USD", "The figure is quick, strong, and active. He can bowl, chew tobacco, and drink alcohol. His action button can be used to hit his wife, a figure sold separately..", toys, southpark));
+        productDataStore.add(new Product("Chinpokomon booster pack", 42, "USD", "Chinpokomon booster pack contains multiple collectable chinpokomons. Gotta buy 'em all! .", toys, southpark));
+        productDataStore.add(new Product("'IT' Garrison's futuristic bike", 1499.69f, "USD", "IT can go up to two hundred miles per hour, gets three hundred miles to the gallon, and is an all-around better mode of travel.", vehicle, garrison));
+        productDataStore.add(new Product("Faith+1", 18.23f, "USD", "Top hits from the christian rock band called Faith+1.", music, cartman));
+        productDataStore.add(new Product("Vientos Del Sur", 10.45f, "USD", "Top hits of Peruvian Pan Flute Music.", music, cartman));
     }
 }
