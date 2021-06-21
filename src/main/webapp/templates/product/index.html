@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <script type='module' src='/static/js/main.js'></script>"
 </head>
 
 <body>
@@ -44,6 +45,18 @@
     <div class="card">
         <strong th:text="${category.name}">Category Title</strong>
     </div>
+
+    <div id="mySidenav" class="sidenav">
+        <h1 style="text-align: center; color: white">Filter by</h1>
+        <a href="javascript:void(0)" class="closebtn" id="close-btn">&times;</a>
+        <h4 style="color: white; margin-left: 5px; margin-top: 20px">Categories</h4>
+        <div th:each="category: ${categories}">
+            <a class="category-filter" style="color:white" th:text="${category.name}">Category name</a>
+        </div>
+    </div>
+
+    <!-- Use any element to open the sidenav -->
+    <button id="filter-btn" class="btn btn-primary">Filter</button>
 
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
