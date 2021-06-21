@@ -39,15 +39,19 @@
 <div id="mySidenav" class="sidenav">
     <h1 style="text-align: center; color: white">Filter by</h1>
     <a href="javascript:void(0)" class="closebtn" id="close-btn">&times;</a>
-    <h4 style="color: white; margin-left: 5px; margin-top: 20px">Categories</h4>
+    <h2 style="color: white; margin-left: 5px; margin-top: 50px">Categories</h2>
     <div th:each="category: ${categories}">
-        <div class="form-check" style="margin-left: 15px; color: white">
+        <div class="form-check" style="margin-left: 30px; color: white">
             <input class="form-check-input category-check" type="checkbox" value="" id="${category.name}-check" checked>
             <label class="form-check-label category-check-label" for="${category.name}-check"
-                   th:text="${category.name}">
+                   th:text="${category.name} +' ('+${category.products.size()}+')'">
                 Category name
             </label>
         </div>
+    </div>
+    <div>
+        <a href='#' id="category-select" class="nav-link select">Select all</a>
+        <a href='#' id="category-clear" class="nav-link clear">Clear all</a>
     </div>
 </div>
 

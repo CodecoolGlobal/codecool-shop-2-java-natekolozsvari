@@ -13,11 +13,28 @@ function initSideBar() {
     categoryCheckBoxes.forEach(function(checkbox){
         checkbox.addEventListener('change', function() {
             let category = checkbox.parentElement.querySelector('.category-check-label').textContent;
+            category = category.substring(0, category.indexOf(' '));
             let categoryContainer = document.querySelector(`.${category}`);
             if (this.checked) {
                 categoryContainer.style.display = 'block';
             } else {
                 categoryContainer.style.display = 'none';
+            }
+        })
+    })
+    let categoryClear = document.getElementById('category-clear');
+    categoryClear.addEventListener('click', function() {
+        categoryCheckBoxes.forEach(function(checkbox){
+            if(checkbox.checked) {
+                checkbox.click();
+            }
+        })
+    })
+    let categorySelect = document.getElementById('category-select');
+    categorySelect.addEventListener('click', function() {
+        categoryCheckBoxes.forEach(function(checkbox){
+            if(!checkbox.checked) {
+                checkbox.click();
             }
         })
     })
