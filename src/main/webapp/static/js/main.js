@@ -40,16 +40,12 @@ function initSideBar() {
     })
     let supplierCheckBoxes = document.querySelectorAll('.supplier-check');
     supplierCheckBoxes.forEach(function(checkbox){
-        console.log(checkbox);
         checkbox.addEventListener('change', function() {
             let supplier = checkbox.parentElement.querySelector('.supplier-check-label').textContent;
-            console.log(supplier);
             supplier = supplier.substring(0, supplier.indexOf('(')-1);
-            console.log(supplier);
             let cards = document.querySelectorAll('.supplier');
             cards.forEach(function(card) {
                 if (card.textContent === supplier) {
-                    console.log(card.parentElement);
                     if (checkbox.checked) {
                         card.parentElement.style.display = 'block';
                     } else {
