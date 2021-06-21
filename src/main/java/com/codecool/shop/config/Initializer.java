@@ -37,7 +37,7 @@ public class Initializer implements ServletContextListener {
 
         //setting up a new product category
 
-        ProductCategory toy = new ProductCategory("Toys", "Toy maker", "Toys for kids and adults only");
+        ProductCategory toy = new ProductCategory("Toy", "Toy maker", "Toys for kids and adults only");
         productCategoryDataStore.add(toy);
         ProductCategory vehicle = new ProductCategory("Vehicle", "Vehicle", "A vehicle that can get you from A to B (or not)");
         productCategoryDataStore.add(vehicle);
