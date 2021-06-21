@@ -60,3 +60,10 @@
 {
     margin: 0 0 11px;
 }
+.cart
+{
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 50px;
+}
