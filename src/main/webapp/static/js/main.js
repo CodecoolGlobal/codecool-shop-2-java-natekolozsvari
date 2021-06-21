@@ -13,7 +13,7 @@ function initSideBar() {
     categoryCheckBoxes.forEach(function(checkbox){
         checkbox.addEventListener('change', function() {
             let category = checkbox.parentElement.querySelector('.category-check-label').textContent;
-            category = category.substring(0, category.indexOf(' '));
+            category = category.substring(0, category.indexOf('(')-1);
             let categoryContainer = document.querySelector(`.${category}`);
             if (this.checked) {
                 categoryContainer.style.display = 'block';
@@ -38,7 +38,46 @@ function initSideBar() {
             }
         })
     })
+    let supplierCheckBoxes = document.querySelectorAll('.supplier-check');
+    supplierCheckBoxes.forEach(function(checkbox){
+        console.log(checkbox);
+        checkbox.addEventListener('change', function() {
+            let supplier = checkbox.parentElement.querySelector('.supplier-check-label').textContent;
+            console.log(supplier);
+            supplier = supplier.substring(0, supplier.indexOf('(')-1);
+            console.log(supplier);
+            let cards = document.querySelectorAll('.supplier');
+            cards.forEach(function(card) {
+                if (card.textContent === supplier) {
+                    console.log(card.parentElement);
+                    if (checkbox.checked) {
+                        card.parentElement.style.display = 'block';
+                    } else {
+                        card.parentElement.style.display = 'none';
+                    }
+                }
+            })
+        })
+    })
+    let supplierClear = document.getElementById('supplier-clear');
+    supplierClear.addEventListener('click', function() {
+        supplierCheckBoxes.forEach(function(checkbox){
+            if(checkbox.checked) {
+                checkbox.click();
+            }
+        })
+    })
+    let supplierSelect = document.getElementById('supplier-select');
+    supplierSelect.addEventListener('click', function() {
+        supplierCheckBoxes.forEach(function(checkbox){
+            if(!checkbox.checked) {
+                checkbox.click();
+            }
+        })
+    })
 }
+
+
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
