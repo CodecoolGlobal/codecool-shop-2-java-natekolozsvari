@@ -1,5 +1,6 @@
 initButtons();
 initSideBar();
+initCartEventListener();
 
 function initButtons() {
     let filterBtn = document.getElementById('filter-btn');
@@ -84,4 +85,11 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
 
+}
+
+function initCartEventListener() {
+    let cartButton = document.querySelector('.cart-button');
+    cartButton.addEventListener('click', function () {
+        window.location.href = "/cart";
+    })
 }
