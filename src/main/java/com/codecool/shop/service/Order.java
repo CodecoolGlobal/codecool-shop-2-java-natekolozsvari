@@ -5,6 +5,7 @@ import com.codecool.shop.model.Product;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class Order {
     private Map<Product, Integer> shoppingCart;
@@ -21,18 +22,27 @@ public class Order {
     }
 
     public void increaseQuantity(Product product) {
-        if (shoppingCart.containsKey(product)) {
+        try {
             int currentValue = shoppingCart.get(product);
             shoppingCart.put(product, currentValue + 1);
             price += product.getDefaultPrice();
         }
+        catch (NoSuchElementException e) {
+            System.out.println("Error " + e.getMessage());
+        }
     }
 
     public void decreaseQuantity(Product product) {
-        if (shoppingCart.containsKey(product)) {
-            int currentValue = shoppingCart.get(product);
-            shoppingCart.put(product, currentValue - 1);
+        try {
+            if (shoppingCart.get(product) == 1) shoppingCart.remove(product);
+            else {
+                int currentValue = shoppingCart.get(product);
+                shoppingCart.put(product, currentValue - 1);
+            }
             price -= product.getDefaultPrice();
+        }
+        catch (NoSuchElementException e) {
+            System.out.println("Error " + e.getMessage());
         }
     }
 
