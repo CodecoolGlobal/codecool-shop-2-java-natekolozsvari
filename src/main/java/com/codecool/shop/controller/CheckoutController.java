@@ -18,17 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = {"/cart"})
-public class CartController extends HttpServlet {
+@WebServlet(urlPatterns = {"/checkout"})
+public class CheckoutController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-//        context.setVariable("products", OrderService.getAll());
 
-        engine.process("product/cart.html", context, resp.getWriter());
+        engine.process("product/checkout.html", context, resp.getWriter());
     }
 
 }

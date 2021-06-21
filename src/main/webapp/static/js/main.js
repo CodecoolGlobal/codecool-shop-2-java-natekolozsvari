@@ -1,6 +1,6 @@
 initButtons();
 initSideBar();
-addCartEventListener();
+initCartEventListener();
 
 function initButtons() {
     let filterBtn = document.getElementById('filter-btn');
@@ -87,7 +87,7 @@ function closeNav() {
 
 }
 
-function addCartEventListener() {
+function initCartEventListener() {
     let cartButton = document.querySelector('.cart-button');
     cartButton.addEventListener('click', function () {
         window.location.href = "/cart";

@@ -33,20 +33,17 @@
 </head>
 
 <body>
-
-<div class="jumbotron text-center">
-  <h1>Cart</h1>
-</div>
-
-<div class="cart-container" th:each="prod : ${products.instanceMap}">
-    <div class="cart-item">
-      <p th:text="${prod.key}">alma</p>
-      <button class="minus-button"></button>
-      <p class="quantity" th:text="${prod.value}">5</p>
-      <button class="plus-button"></button>
-      <p class="price" th:text="${prod.key.getPrice()}">15</p>
-    </div>
-  <button class="checkout-button">Checkout</button>
+<div class="container">
+  <h4>Cart
+    <span class="price">
+      <b>4</b>
+    </span>
+  </h4>
+  <div class="cart-item" th:each="prod : ${products.instanceMap}">
+    <p th:text="${prod.key}"><span th:text="${prod.value}"></span><span class="price" th:text="${prod.key.getPrice()}"></span></p>
+  </div>
+  <hr>
+  <p>Total<span class="price"><b></b></span></p>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
