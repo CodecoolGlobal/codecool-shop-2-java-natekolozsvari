@@ -35,15 +35,20 @@
 <body>
 <div class="container">
     <h3>Payment</h3>
-    <label for="cName">Name on Card</label>
-    <input type="text" id="cName" name="cardName" placeholder="Eric Cartman">
-    <label for="cNum">Card number</label>
-    <input type="text" id="cNum" name="cardNumber" placeholder="1111-2222-3333-4444" maxlength="16">
-    <label for="expDate">Expiration Date</label>
-    <input type="text" id="expDate" placeholder="MM/YY" maxlength="4">
-    <label for="cvv">CVV</label>
-    <input type="password" id="cvv" name="cvv" placeholder="***" maxlength="3">
-    <button class="btn" onclick="location.href='/'">Pay</button>
+    <form name="paymentForm" method="post" action="payment">
+        <label for="cName">Name on Card</label>
+        <input type="text" id="cName" name="cardName" placeholder="Eric Cartman">
+        <label for="cNum">Card number</label>
+        <input type="text" id="cNum" name="cardNumber" placeholder="1111-2222-3333-4444" maxlength="16">
+        <label for="expDate">Expiration Date</label>
+        <input type="text" id="expDate" name="expDate" placeholder="MM/YY" maxlength="4">
+        <label for="cvv">CVV</label>
+        <input type="password" id="cvv" name="cvv" placeholder="***" maxlength="3">
+        <input id="orderId" name="orderId" value="" type="hidden">
+        <button class="btn" type="submit">Pay</button>
+    </form>
 </div>
+<script src='/static/js/payment.js'></script>
+
 </body>
 </html>
