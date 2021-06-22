@@ -12,6 +12,9 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.service.OrderService;
 import com.codecool.shop.service.ProductService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -21,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 
 
@@ -30,6 +34,10 @@ public class UpdateCartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        PrintWriter out = response.getWriter();
         OrderDao orderDataStore = OrderDaoMem.getInstance();
         ProductDao productDao = ProductDaoMem.getInstance();
         Enumeration params = request.getParameterNames();
@@ -48,6 +56,13 @@ public class UpdateCartServlet extends HttpServlet {
             }
         }
         if (!inOrder) orderDataStore.addToCart(newProduct, 1);
+
+        Gson gson = new Gson();
+
+        String json = gson.toJson(orderDataStore.getShoppingCart());
+        out.println(json);
+
     }
+
 }
 

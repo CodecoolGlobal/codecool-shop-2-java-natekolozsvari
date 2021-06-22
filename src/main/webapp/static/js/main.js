@@ -1,5 +1,8 @@
-async function updateCart(data) {
+async function updateCart(data,callback) {
     fetch(`/updateCart${data}`)
+        .then((response) => response.json())
+        .then((items) => callback(items))
+        .catch(error  => console.log(error));
 }
 
 window.onload = () => {
@@ -11,14 +14,15 @@ window.onload = () => {
         button.addEventListener('click', () => {
             let productName = button.dataset.name;
             let fetchParam = `?name=${productName}`;
-            updateCart(fetchParam);
+            updateCart(fetchParam,showCartItems);
             cartSize.textContent = (parseInt(cartSize.textContent) + 1).toString()
         });
     }
 
     initButtons();
     initSideBar();
-    initCartEventListener();
+    // initCartEventListener();
+    cartHoverListener();
 }
     function initButtons() {
         let filterBtn = document.getElementById('filter-btn');
@@ -120,4 +124,80 @@ window.onload = () => {
             window.location.href = "/cart";
         })
     }
+
+    function cartHoverListener(){
+// Get the modal
+        var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+        var btn = document.querySelector(".shopcart");
+
+// Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+// When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+// When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
+    function showCartItems(items){
+    let modalC = document.querySelector(".modal-content");
+    modalC.innerHTML = '';
+        for (var key in items) {
+            let listOfString = key.split(",");
+
+            let name = listOfString[1].substr(7);
+            let price = parseFloat(listOfString[2].substr(15)).toFixed(2);
+            console.log(name+" "+price);
+            let amount = items[key];
+
+            let itemTag = `<div class="cartItem">
+<p id="itemName" style="float:left; font-size:17px; width:100%;">${name}</p>
+<br>
+<div><p id="itemPrice" style="float:left;font-size:13px;">Price: ${(price*amount).toFixed(2)} USD</p>
+
+<pre id="plusBtn" style="float:right;font-weight: bold;"> +</pre>
+<input style="float:right;" id="amountOfItem" value="${amount}" size="1">
+<pre style="float:right;font-weight: bold;" id="minusBtn">- </pre></div>
+
+</div>
+`
+
+
+
+            modalC.insertAdjacentHTML("beforeend", itemTag )
+
+        }
+
+        modalC.insertAdjacentHTML("beforeend", `<span class="close" style="color: black;
+    float: right;
+    font-size: 18px;
+    font-weight: bold; cursor:pointer;">Close</span>`)
+        setTimeout(()=>{
+            let span = document.querySelector(".close");
+            let modal = document.getElementById("myModal");
+            span.onclick = function() {
+                modal.style.display = "none";}
+        },1000)
+
+
+
+
+
+    }
+
+
 
