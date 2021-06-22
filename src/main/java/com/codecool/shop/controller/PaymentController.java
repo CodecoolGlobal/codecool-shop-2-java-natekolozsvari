@@ -7,7 +7,6 @@ import com.codecool.shop.dao.UserOrderDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.UserOrderDaoMem;
-import com.codecool.shop.service.Order;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.service.UserOrder;
 import org.thymeleaf.TemplateEngine;
