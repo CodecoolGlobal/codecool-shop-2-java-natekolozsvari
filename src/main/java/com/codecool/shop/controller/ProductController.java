@@ -50,6 +50,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("toys", productService.getProductsForCategory(1));
         context.setVariable("music", productService.getProductCategory(3));
         context.setVariable("musics", productService.getProductsForCategory(3));
+        context.setVariable("cartSize", orderService.getCartSize());
 
 
         // // Alternative setting of the template context
