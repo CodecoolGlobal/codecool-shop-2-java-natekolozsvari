@@ -124,7 +124,58 @@
 #main {
     transition: margin-left .5s;
     padding: 20px;
+
 }
+.cart-container
+{
+    display: flex;
+    flex-wrap: wrap;
+}
+.cart-item
+{
+    flex: 1 0 33%;
+    height: 50px;
+    border: 1px solid black;
+}
+.container {
+    background-color: #e9ecef;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+}
+label {
+    margin-bottom: 10px;
+    display: block;
+}
+.btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    width: 100%;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 17px;
+}
+.btn:hover {
+    background-color: #45a049;
+}
+input {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+body{
+    background-image: url("../img/background.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;}
+
+
 #filter-btn {
     width: 100%;
 }
