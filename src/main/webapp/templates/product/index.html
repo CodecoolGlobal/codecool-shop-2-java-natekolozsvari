@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Codecool" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <title>Codecool Shop</title>
 
@@ -14,120 +14,168 @@
 
     <!--Latest compiled and minified Popper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
-    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 
-    <script src='/static/js/main.js' defer></script>
+    <script type='module' src='/static/js/main.js' defer></script>
 </head>
 
 <body>
 
-<div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
-    <div class="cart">
-        <i class="fas fa-shopping-cart"></i>
-        <i class="cart-size"></i>
+<div id="mySidenav" class="sidenav">
+    <h1 style="text-align: center; color: white">Filter by</h1>
+    <a href="javascript:void(0)" class="closebtn" id="close-btn">&times;</a>
+    <h2 style="color: white; margin-left: 5px; margin-top: 50px">Category</h2>
+    <div th:each="category: ${categories}">
+        <div class="form-check" style="margin-left: 30px; color: white">
+            <input class="form-check-input category-check" type="checkbox" value="" id="${category.name}-check" checked>
+            <label class="form-check-label category-check-label" for="${category.name}-check"
+                   th:text="${category.name} +' ('+${category.products.size()}+')'">
+                Category name
+            </label>
+        </div>
     </div>
+    <div>
+        <a href='#' id="category-select" class="nav-link select">Select all</a>
+        <a href='#' id="category-clear" class="nav-link clear">Clear all</a>
+    </div>
+
+    <h2 style="color: white; margin-left: 5px; margin-top: 50px">Supplier</h2>
+    <div th:each="supplier: ${suppliers}">
+        <div class="form-check" style="margin-left: 30px; color: white">
+            <input class="form-check-input supplier-check" type="checkbox" value="" id="${supplier.name}-check" checked>
+            <label class="form-check-label supplier-check-label" for="${supplier.name}-check"
+                   th:text="${supplier.name} +' ('+${supplier.products.size()}+')'">
+                Category name
+            </label>
+
+        </div>
+    </div>
+    <div>
+        <a href='#' id="supplier-select" class="nav-link select">Select all</a>
+        <a href='#' id="supplier-clear" class="nav-link clear">Clear all</a>
+    </div>
+
 </div>
 
-<div class="container">
-    <div class="card">
-        <strong th:text="${toy.name}">Category Title</strong>
+<div id="main">
+    <div class="jumbotron text-center">
+        <h1>Codecool Shop</h1>
+        <div class="cart">
+            <i class="fas fa-shopping-cart cart-button"></i>
+            <i class="cart-size"></i>
+        </div>
     </div>
 
-    <div id="vehicles" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${toys}">
+    <div class="container" style="margin-bottom: 20px">
+    <button id="filter-btn" class="btn btn-primary">Filter</button>
+    </div>
+    <div th:class="'container ' + ${vehicle.name}">
+        <div class="card">
+            <strong th:text="${vehicle.name}">Category Title</strong>
+        </div>
+
+        <!-- Use any element to open the sidenav -->
+        <div th:class="'container ' + ${toy.name}">
             <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                <strong th:text="${toy.name}">Category Title</strong>
+            </div>
+
+            <div id="toys" class="row">
+                <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${toys}">
+                    <div class="card">
+                        <div class="supplier" style="display: none" th:text="${prod.supplier.name}">Supplier</div>
+                        <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                        <div class="card-header">
+                            <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                            <p class="card-text" th:text="${prod.description}">Product description... </p>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                            </div>
+                            <div class="card-text">
+                                <a class="btn btn-success" th:data-name="${prod.name}">Add to cart</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-text">
-                        <a class="btn btn-success" th:data-name="${prod.name}"
-                           th:data-defaultP="${prod.getDefaultPrice()}" th:data-defaultC="${prod.getDefaultCurrency()}" th:data-productC="${prod.getProductCategory()}"
-                        th:data-supplier="${prod.getSupplier()}">Add to cart</a>
+                </div>
+            </div>
+
+        </div>
+     
+        <div id="vehicles" class="row">
+            <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${vehicles}">
+                <div class="card">
+                    <div class="supplier" style="display: none" th:text="${prod.supplier.name}">Supplier</div>
+                    <img class="" src="http://placehold.it/400x250/000/fff"
+                         th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
+                    <div class="card-header">
+                        <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                        <p class="card-text" th:text="${prod.description}">Product description... </p>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-text">
+                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                        </div>
+                        <div class="card-text">
+                            <a class="btn btn-success" th:data-name="${prod.name}">Add to cart</a>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-</div>
-<div class="container">
-    <div class="card">
-        <strong th:text="${vehicle.name}">Category Title</strong>
-    </div>
+    <div th:class="'container ' + ${music.name}">
+        <div class="card">
+            <strong th:text="${music.name}">Category Title</strong>
+        </div>
 
-    <div id="toys" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${vehicles}">
-            <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+        <div id="musics" class="row">
+            <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${musics}">
+                <div class="card">
+                    <div class="supplier" style="display: none" th:text="${prod.supplier.name}">Supplier</div>
+
+                    <img class="" src="http://placehold.it/400x250/000/fff"
+                         th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
+                    <div class="card-header">
+                        <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                        <p class="card-text" th:text="${prod.description}">Product description... </p>
                     </div>
-                    <div class="card-text">
-                        <a class="btn btn-success" th:data-name="${prod.name}"
-                           th:data-defaultP="${prod.getDefaultPrice()}" th:data-defaultC="${prod.getDefaultCurrency()}" th:data-productC="${prod.getProductCategory()}"
-                           th:data-supplier="${prod.getSupplier()}">Add to cart</a>
+
+                    <div class="card-body">
+                        <div class="card-text">
+                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                        </div>
+                        <div class="card-text">
+                            <a class="btn btn-success" th:data-name="${prod.name}">Add to cart</a>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
+    <div th:replace="footer.html :: copy"></div>
 </div>
-<div class="container">
-    <div class="card">
-        <strong th:text="${music.name}">Category Title</strong>
-    </div>
-
-    <div id="musics" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${musics}">
-            <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
-                    </div>
-                    <div class="card-text">
-                        <a class="btn btn-success" th:data-name="${prod.name}"
-                           th:data-defaultP="${prod.getDefaultPrice()}" th:data-defaultC="${prod.getDefaultCurrency()}" th:data-productC="${prod.getProductCategory()}"
-                           th:data-supplier="${prod.getSupplier()}">Add to cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<div th:replace="footer.html :: copy"></div>
 
 </body>
 </html>

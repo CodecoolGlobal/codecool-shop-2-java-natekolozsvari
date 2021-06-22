@@ -7,6 +7,9 @@ import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.service.OrderService;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
+
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.config.TemplateEngineUtil;
 import org.thymeleaf.TemplateEngine;
@@ -28,7 +31,8 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore,productCategoryDataStore);
+        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDataStore);
 
         OrderDao orderDataStore = OrderDaoMem.getInstance();
         OrderService orderService = new OrderService(orderDataStore);
@@ -36,7 +40,10 @@ public class ProductController extends HttpServlet {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-
+        context.setVariable("category", productService.getProductCategory(1));
+        context.setVariable("products", productService.getProductsForCategory(1));
+        context.setVariable("categories", productService.getAllProductsCategory());
+        context.setVariable("suppliers", productService.getAllSuppliers());
         context.setVariable("vehicle", productService.getProductCategory(2));
         context.setVariable("vehicles", productService.getProductsForCategory(2));
         context.setVariable("toy", productService.getProductCategory(1));
