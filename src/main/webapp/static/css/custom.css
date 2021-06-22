@@ -141,12 +141,15 @@ header {
 strong {
     font-size: 36px;
 }
-
+h1{font-size: 75px;
+padding: 1.9rem;}
 body{
     background-image: url("../img/background.png");
     background-repeat: no-repeat;
     background-size: 100%;
-    background-attachment: fixed;}
+    background-attachment: fixed;
+    font-family: 'South Park', sans-serif;
+}
 
 
 img {
