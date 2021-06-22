@@ -33,7 +33,9 @@ label {
 .btn:hover {
     background-color: #45a049;
 }
-input {
+input[type=text],
+input[type=number],
+input[type=email]{
     width: 100%;
     margin-bottom: 20px;
     padding: 12px;
