@@ -3,6 +3,8 @@ async function updateCart(data) {
 }
 
 window.onload = () => {
+    let cartSize = document.querySelector(".cart-size");
+    cartSize.textContent = cartSize.dataset.value;
     let addToCartButtons = document.querySelectorAll(".btn-success");
     for (let button of addToCartButtons) {
 
@@ -10,6 +12,7 @@ window.onload = () => {
             let productName = button.dataset.name;
             let fetchParam = `?name=${productName}`;
             updateCart(fetchParam);
+            cartSize.textContent = (parseInt(cartSize.textContent) + 1).toString()
         });
     }
 
@@ -20,7 +23,7 @@ window.onload = () => {
     function initButtons() {
         let filterBtn = document.getElementById('filter-btn');
         filterBtn.addEventListener('click', function() {
-            if (this.parentElement.parentElement.style.marginLeft === '250px'){
+            if (this.parentElement.parentElement.style.marginLeft === '300px'){
                 closeNav();
             } else {
                 openNav();
@@ -98,9 +101,9 @@ window.onload = () => {
 
 
     function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-        document.querySelector("header").style.marginLeft = "250px";
+        document.getElementById("mySidenav").style.width = "300px";
+        document.getElementById("main").style.marginLeft = "300px";
+        document.querySelector("header").style.marginLeft = "300px";
     }
 
     function closeNav() {
