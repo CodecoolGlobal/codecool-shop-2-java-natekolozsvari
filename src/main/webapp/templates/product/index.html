@@ -31,8 +31,28 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <script type='module' src='/static/js/main.js'></script>
+
+
 </head>
 
+<header>
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="#news">News</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+        <a id="filter-btn" style="cursor: pointer;" >Filter</a>
+
+        <a>
+            <i class="fas fa-shopping-cart cart-button"></i>
+            <i class="cart-size"></i>
+        </a>
+
+    </div>
+
+
+
+</header>
 <body>
 
 <div id="mySidenav" class="sidenav">
@@ -69,22 +89,11 @@
 
 </div>
 
-<div id="main">
-    <div class="jumbotron text-center">
-        <h1>Codecool Shop</h1>
-        <div class="cart">
-            <i class="fas fa-shopping-cart cart-button"></i>
-            <i class="cart-size"></i>
-        </div>
-    </div>
+<div>
+    <h1 style="text-align: center;">SouthCool Shop</h1>
+</div>
 
-    <div class="container" style="margin-bottom: 20px">
-    <button id="filter-btn" class="btn btn-primary">Filter</button>
-    </div>
-    <div th:class="'container ' + ${vehicle.name}">
-        <div class="card">
-            <strong th:text="${vehicle.name}">Category Title</strong>
-        </div>
+
 
         <!-- Use any element to open the sidenav -->
         <div th:class="'container ' + ${toy.name}">
@@ -114,6 +123,10 @@
             </div>
 
         </div>
+<div th:class="'container ' + ${vehicle.name}">
+    <div class="card">
+        <strong th:text="${vehicle.name}">Category Title</strong>
+    </div>
         <div id="vehicles" class="row">
             <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${vehicles}">
                 <div class="card">
