@@ -3,6 +3,8 @@ async function updateCart(data) {
 }
 
 window.onload = () => {
+    let cartSize = document.querySelector(".cart-size");
+    cartSize.textContent = cartSize.dataset.value;
     let addToCartButtons = document.querySelectorAll(".btn-success");
     for (let button of addToCartButtons) {
 
@@ -10,6 +12,7 @@ window.onload = () => {
             let productName = button.dataset.name;
             let fetchParam = `?name=${productName}`;
             updateCart(fetchParam);
+            cartSize.textContent = (parseInt(cartSize.textContent) + 1).toString()
         });
     }
 

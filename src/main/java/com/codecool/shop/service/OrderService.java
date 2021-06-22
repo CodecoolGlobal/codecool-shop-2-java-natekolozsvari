@@ -21,4 +21,9 @@ public class OrderService {
         return orderDao.getAll();
     }
 
+    public int getCartSize() {
+        int size = 0;
+        for (Product product : orderDao.getAll().keySet()) size += orderDao.getAll().get(product);
+        return size;
+    }
 }
