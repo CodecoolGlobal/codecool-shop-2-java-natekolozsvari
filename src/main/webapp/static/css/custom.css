@@ -167,3 +167,7 @@ input {
     border: 1px solid #ccc;
     border-radius: 3px;
 }
+
+body{
+    background-image: url("../img/product_6.jpg");
+}
