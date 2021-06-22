@@ -72,6 +72,13 @@ function initSideBar() {
             }
         })
     })
+    let labels = document.querySelectorAll('label');
+    labels.forEach(function(label) {
+        label.addEventListener('click', function() {
+            event.preventDefault();
+            label.parentElement.querySelector('input').click();
+        })
+    })
 }
 
 
