@@ -124,7 +124,7 @@
 #main {
     transition: margin-left .5s;
     padding: 20px;
-<<<<<<< HEAD
+
 }
 .cart-container
 {
@@ -170,5 +170,9 @@ input {
 }
 
 body{
-    background-image: url("../img/product_6.jpg");
+    background-image: url("../img/background.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+
 }
