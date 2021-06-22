@@ -5,10 +5,10 @@ import java.util.Currency;
 
 public class Product extends BaseModel {
 
-    private float defaultPrice = 0;
-    private Currency defaultCurrency = Currency.getInstance("USD");
-    private ProductCategory productCategory = new ProductCategory("","","");
-    private Supplier supplier = new Supplier("","");
+    private float defaultPrice;
+    private Currency defaultCurrency;
+    private ProductCategory productCategory;
+    private Supplier supplier;
 
 
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
@@ -18,9 +18,9 @@ public class Product extends BaseModel {
         this.setProductCategory(productCategory);
     }
 
-    public Product(String name){
-        super(name);
-    }
+//    public Product(String name){
+//        super(name);
+//    }
 
     public float getDefaultPrice() {
         return defaultPrice;

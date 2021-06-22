@@ -16,6 +16,10 @@ public class ProductService{
         this.productCategoryDao = productCategoryDao;
     }
 
+    public Product getProductByName(String name) {
+        return productDao.getByName(name);
+    }
+
     public ProductCategory getProductCategory(int categoryId){
         return productCategoryDao.find(categoryId);
     }

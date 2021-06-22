@@ -31,25 +31,23 @@ public class UpdateCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderDao orderDataStore = OrderDaoMem.getInstance();
+        ProductDao productDao = ProductDaoMem.getInstance();
         Enumeration params = request.getParameterNames();
         String[] paramValues = null;
         String paramName = (String) params.nextElement();
         paramValues = request.getParameterValues(paramName);
 
         String productName = paramValues[0];
-//        int quantity = Integer.parseInt(paramValues[1]);
+        Product newProduct = productDao.getByName(productName);
 
-
-        System.out.println(productName);
-
-        orderDataStore.addToCart(new Product(productName), 1);
-
-
-        System.out.println(orderDataStore.getShoppingCart());
-
-
-
+        boolean inOrder = false;
+        for (Product product : orderDataStore.getAll().keySet()) {
+            if (product.getName().equals(newProduct.getName())) {
+                orderDataStore.increaseQuantity(product);
+                inOrder = true;
+            }
+        }
+        if (!inOrder) orderDataStore.addToCart(newProduct, 1);
     }
-
 }
 
