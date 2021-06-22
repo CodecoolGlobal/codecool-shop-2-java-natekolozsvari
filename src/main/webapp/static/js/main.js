@@ -20,7 +20,7 @@ window.onload = () => {
     function initButtons() {
         let filterBtn = document.getElementById('filter-btn');
         filterBtn.addEventListener('click', function() {
-            if (this.parentElement.parentElement.style.marginLeft === '250px'){
+            if (this.parentElement.parentElement.style.marginLeft === '300px'){
                 closeNav();
             } else {
                 openNav();
@@ -98,9 +98,9 @@ window.onload = () => {
 
 
     function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-        document.querySelector("header").style.marginLeft = "250px";
+        document.getElementById("mySidenav").style.width = "300px";
+        document.getElementById("main").style.marginLeft = "300px";
+        document.querySelector("header").style.marginLeft = "300px";
     }
 
     function closeNav() {

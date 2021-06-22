@@ -60,11 +60,11 @@
 <body>
 
 <div id="mySidenav" class="sidenav">
-    <h1 style="text-align: center; color: white">Filter by</h1>
+    <h1 style="text-align: center; color: white; font-size: 48px;">Filter by</h1>
     <a href="javascript:void(0)" class="closebtn" id="close-btn">&times;</a>
-    <h2 style="color: white; margin-left: 5px; margin-top: 50px">Category</h2>
+    <h2 style="color: white; margin-left: 15px; margin-top: 50px; font-size: 28px">Category</h2>
     <div th:each="category: ${categories}">
-        <div class="form-check" style="margin-left: 30px; color: white">
+        <div class="form-check" style="margin-left: 40px; color: white">
             <input class="form-check-input category-check" type="checkbox" value="" th:id="${category.name}+'-check'" checked>
             <label class="form-check-label category-check-label" th:for="${category.name}+'-check'"
                    th:text="${category.name} +' ('+${category.products.size()}+')'">
@@ -77,9 +77,9 @@
         <a href='#' id="category-clear" class="nav-link clear">Clear all</a>
     </div>
 
-    <h2 style="color: white; margin-left: 5px; margin-top: 50px">Supplier</h2>
+    <h2 style="color: white; margin-left: 15px; margin-top: 50px; font-size: 28px;">Supplier</h2>
     <div th:each="supplier: ${suppliers}">
-        <div class="form-check" style="margin-left: 30px; color: white">
+        <div class="form-check" style="margin-left: 40px; color: white">
             <input class="form-check-input supplier-check" type="checkbox" value="" th:id="${supplier.name}+'-check'" checked>
             <label class="form-check-label supplier-check-label" th:for="${supplier.name}+'-check'"
                    th:text="${supplier.name} +' ('+${supplier.products.size()}+')'">
@@ -157,7 +157,7 @@
             </div>
         </div>
     </div>
-
+</div>
     <div th:class="'container ' + ${music.name}">
         <div>
             <strong th:text="${music.name}">Category Title</strong>
