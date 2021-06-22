@@ -1,19 +1,28 @@
-package com.codecool.shop.service;
+package com.codecool.shop.dao.implementation;
 
+import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class OrderDaoMem implements OrderDao {
+    private Map<Product, Integer> shoppingCart = new HashMap<>();
+    private float price = 0;
+    private static OrderDaoMem instance = null;
+
+    private OrderDaoMem() {
+    }
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
-
-public class Order {
-    private Map<Product, Integer> shoppingCart;
-    private float price;
-
-    public Order() {
-        shoppingCart = new HashMap<>();
-        price = 0;
+    public static OrderDaoMem getInstance() {
+        if (instance == null) {
+            instance = new OrderDaoMem();
+        }
+        return instance;
     }
 
     public void addToCart(Product product, int quantity) {
@@ -52,5 +61,10 @@ public class Order {
 
     public float getPrice() {
         return price;
+    }
+
+    @Override
+    public Map<Product, Integer> getAll() {
+        return shoppingCart;
     }
 }
