@@ -38,7 +38,7 @@
 <div id="mySidenav" class="sidenav">
     <h1 style="text-align: center; color: white">Filter by</h1>
     <a href="javascript:void(0)" class="closebtn" id="close-btn">&times;</a>
-    <h2 style="color: white; margin-left: 5px; margin-top: 50px">Categories</h2>
+    <h2 style="color: white; margin-left: 5px; margin-top: 50px">Category</h2>
     <div th:each="category: ${categories}">
         <div class="form-check" style="margin-left: 30px; color: white">
             <input class="form-check-input category-check" type="checkbox" value="" id="${category.name}-check" checked>
@@ -78,9 +78,9 @@
         </div>
     </div>
 
-
+    <div class="container" style="margin-bottom: 20px">
     <button id="filter-btn" class="btn btn-primary">Filter</button>
-
+    </div>
     <div th:class="'container ' + ${vehicle.name}">
         <div class="card">
             <strong th:text="${vehicle.name}">Category Title</strong>
