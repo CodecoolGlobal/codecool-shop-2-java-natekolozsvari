@@ -19,7 +19,13 @@ window.onload = () => {
 }
     function initButtons() {
         let filterBtn = document.getElementById('filter-btn');
-        filterBtn.addEventListener('click', openNav);
+        filterBtn.addEventListener('click', function() {
+            if (this.parentElement.parentElement.style.marginLeft === '250px'){
+                closeNav();
+            } else {
+                openNav();
+            }
+        });
         let closeBtn = document.getElementById('close-btn');
         closeBtn.addEventListener('click', closeNav);
     }
@@ -94,11 +100,14 @@ window.onload = () => {
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
         document.getElementById("main").style.marginLeft = "250px";
+        document.querySelector("header").style.marginLeft = "250px";
     }
 
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
         document.getElementById("main").style.marginLeft = "0";
+        document.querySelector("header").style.marginLeft = "0";
+
 
     }
 
