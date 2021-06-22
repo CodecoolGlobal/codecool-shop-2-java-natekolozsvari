@@ -30,8 +30,9 @@
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-    <script type='module' src='/static/js/main.js'></script>
 
+
+    <script type='module' src='/static/js/main.js' defer></script>
 
 </head>
 
@@ -61,8 +62,8 @@
     <h2 style="color: white; margin-left: 5px; margin-top: 50px">Category</h2>
     <div th:each="category: ${categories}">
         <div class="form-check" style="margin-left: 30px; color: white">
-            <input class="form-check-input category-check" type="checkbox" value="" id="${category.name}-check" checked>
-            <label class="form-check-label category-check-label" for="${category.name}-check"
+            <input class="form-check-input category-check" type="checkbox" value="" th:id="${category.name}+'-check'" checked>
+            <label class="form-check-label category-check-label" th:for="${category.name}+'-check'"
                    th:text="${category.name} +' ('+${category.products.size()}+')'">
                 Category name
             </label>
@@ -72,14 +73,16 @@
         <a href='#' id="category-select" class="nav-link select">Select all</a>
         <a href='#' id="category-clear" class="nav-link clear">Clear all</a>
     </div>
+
     <h2 style="color: white; margin-left: 5px; margin-top: 50px">Supplier</h2>
     <div th:each="supplier: ${suppliers}">
         <div class="form-check" style="margin-left: 30px; color: white">
-            <input class="form-check-input supplier-check" type="checkbox" value="" id="${supplier.name}-check" checked>
-            <label class="form-check-label supplier-check-label" for="${supplier.name}-check"
+            <input class="form-check-input supplier-check" type="checkbox" value="" th:id="${supplier.name}+'-check'" checked>
+            <label class="form-check-label supplier-check-label" th:for="${supplier.name}+'-check'"
                    th:text="${supplier.name} +' ('+${supplier.products.size()}+')'">
                 Category name
             </label>
+
         </div>
     </div>
     <div>
@@ -93,11 +96,9 @@
     <h1 style="text-align: center;">SouthCool Shop</h1>
 </div>
 
-
-
         <!-- Use any element to open the sidenav -->
         <div th:class="'container ' + ${toy.name}">
-            <div class="card">
+            <div>
                 <strong th:text="${toy.name}">Category Title</strong>
             </div>
 
@@ -115,7 +116,7 @@
                                 <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                             </div>
                             <div class="card-text">
-                                <a class="btn btn-success" href="#">Add to cart</a>
+                                <a class="btn btn-success" th:data-name="${prod.name}">Add to cart</a>
                             </div>
                         </div>
                     </div>
@@ -123,10 +124,12 @@
             </div>
 
         </div>
-<div th:class="'container ' + ${vehicle.name}">
-    <div class="card">
-        <strong th:text="${vehicle.name}">Category Title</strong>
-    </div>
+
+    <div th:class="'container ' + ${vehicle.name}">
+        <div>
+            <strong th:text="${vehicle.name}">Category Title</strong>
+        </div>
+
         <div id="vehicles" class="row">
             <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${vehicles}">
                 <div class="card">
@@ -137,13 +140,14 @@
                         <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                         <p class="card-text" th:text="${prod.description}">Product description... </p>
                     </div>
+
                     <div class="card-body">
                         <div class="card-text">
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
                         <div class="card-text">
-                            <a class="btn btn-success" href="#">Add to cart</a>
-                        </div>
+                            <a class="btn btn-success" th:data-name="${prod.name}">Add to cart</a>
+
                     </div>
                 </div>
             </div>
@@ -151,7 +155,7 @@
     </div>
 
     <div th:class="'container ' + ${music.name}">
-        <div class="card">
+        <div>
             <strong th:text="${music.name}">Category Title</strong>
         </div>
 
@@ -166,13 +170,15 @@
                         <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                         <p class="card-text" th:text="${prod.description}">Product description... </p>
                     </div>
+
                     <div class="card-body">
                         <div class="card-text">
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
                         <div class="card-text">
-                            <a class="btn btn-success" href="#">Add to cart</a>
+                            <a class="btn btn-success" th:data-name="${prod.name}">Add to cart</a>
                         </div>
+
                     </div>
                 </div>
             </div>
