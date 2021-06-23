@@ -139,10 +139,10 @@ function cartHoverListener() {
 
 // When the user clicks on the button, open the modal
     btn.onclick = function () {
-        if (modal.style.display === "none") {
-            modal.style.display = "block";
-        } else {
+        if (modal.style.display === "block") {
             modal.style.display = "none";
+        } else {
+            modal.style.display = "block";
         }
     }
 
@@ -234,6 +234,21 @@ function showCartItems(items) {
                             updateCart(fetchParam, showCartItems);
                         }
                 }
+                })
+            }
+        })
+        plusBtns.forEach(button => {
+            button.onclick = function() {
+                inputFields.forEach(inputF => {
+                    if(inputF.dataset.itemname === button.dataset.itemname) {
+                        let cartSize = document.querySelector(".cart-size");
+                        let productName = button.dataset.itemname;
+                        let mod = "add";
+                        let fetchParam = `?name=${productName}&mod=${mod}`;
+                        updateCart(fetchParam, showCartItems);
+                        cartSize.textContent = (parseInt(cartSize.textContent) + 1).toString();
+                        inputF.value += 1;
+                    }
                 })
             }
         })
