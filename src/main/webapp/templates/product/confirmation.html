@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 
 
-    <script type='module' src='/static/js/main.js' defer></script>
+    <script type='module' src='/static/js/modal.js'></script>
 
     <link href="http://fonts.cdnfonts.com/css/south-park" rel="stylesheet">
 
@@ -46,47 +46,8 @@
 <body>
 
 
-<div id="mySidenav" class="sidenav">
-    <h1 style="text-align: center; color: white; font-size: 48px;">Filter by</h1>
-    <a href="javascript:void(0)" class="closebtn" id="close-btn">&times;</a>
-    <h2 style="color: white; margin-left: 15px; margin-top: 50px; font-size: 28px">Category</h2>
-    <div th:each="category: ${categories}">
-        <div class="form-check" style="margin-left: 40px; color: white">
-            <input class="form-check-input category-check" type="checkbox" value="" th:id="${category.name}+'-check'"
-                   checked>
-            <label class="form-check-label category-check-label" th:for="${category.name}+'-check'"
-                   th:text="${category.name} +' ('+${category.products.size()}+')'">
-                Category name
-            </label>
-        </div>
-    </div>
-    <div>
-        <a href='#' id="category-select" class="nav-link select">Select all</a>
-        <a href='#' id="category-clear" class="nav-link clear">Clear all</a>
-    </div>
-
-    <h2 style="color: white; margin-left: 15px; margin-top: 50px; font-size: 28px;">Supplier</h2>
-    <div th:each="supplier: ${suppliers}">
-        <div class="form-check" style="margin-left: 40px; color: white">
-            <input class="form-check-input supplier-check" type="checkbox" value="" th:id="${supplier.name}+'-check'"
-                   checked>
-            <label class="form-check-label supplier-check-label" th:for="${supplier.name}+'-check'"
-                   th:text="${supplier.name} +' ('+${supplier.products.size()}+')'">
-                Category name
-            </label>
-
-        </div>
-    </div>
-    <div>
-        <a href='#' id="supplier-select" class="nav-link select">Select all</a>
-        <a href='#' id="supplier-clear" class="nav-link clear">Clear all</a>
-    </div>
-
-</div>
-
 <div class="topnav">
     <a href="/">Home</a>
-    <a class="filter" id="filter-btn" style="cursor: pointer;" href="#">Filter</a>
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
 
