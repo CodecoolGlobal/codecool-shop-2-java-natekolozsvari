@@ -190,17 +190,18 @@ function showCartItems(items) {
 
     modalC.insertAdjacentHTML("beforeend", `<p>__________________________________________</p>`);
     modalC.insertAdjacentHTML("beforeend", `<div class="totalPrice"><p style="float: right">Total: ${totalPrice.toFixed(2)}</p></div>`);
-    modalC.insertAdjacentHTML("beforeend", `<br><div class="cartFooter"><span class="close">Close</span> ${checkoutTag} </div>`)
+    modalC.insertAdjacentHTML("beforeend", `<br><span class="empty_cart close">Empty Cart</span><br><div class="cartFooter"><span class="close close_button">Close</span> ${checkoutTag} </div>`)
 
 
     setTimeout(() => {
-        let span = document.querySelector(".close");
+        let span = document.querySelector(".close_button");
         let modal = document.getElementById("myModal");
         let checkout = document.querySelector(".checkout");
         let minusBtns = document.querySelectorAll("#minusBtn");
         console.log(minusBtns)
         let plusBtns = document.querySelectorAll("#plusBtn");
         let inputFields = document.querySelectorAll(".amountOfItem");
+        let emptyCart = document.querySelector(".empty_cart")
 
         span.onclick = function () {
             modal.style.display = "none";
@@ -230,7 +231,9 @@ function showCartItems(items) {
             }
         })
 
-
+        emptyCart.onclick = function () {
+            updateCart("clear", showCartItems)
+        }
     }, 1000)
 
 }
