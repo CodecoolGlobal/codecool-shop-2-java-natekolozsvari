@@ -42,21 +42,25 @@ public class UpdateCartServlet extends HttpServlet {
         OrderDao orderDataStore = OrderDaoMem.getInstance();
         ProductDao productDao = ProductDaoMem.getInstance();
 
-        try {
+        String productName = request.getParameter("name");
 
 
-            String productName = request.getParameter("name");
+        if (productName.equals("show")) {}
+
+        else if (productName.equals("clear")) {
+            orderDataStore.getShoppingCart().clear();
+        }
+
+        else {
             String modifier = request.getParameter("mod");
             Product newProduct = productDao.getByName(productName);
-
-
             if (productName != null) {
                 boolean inOrder = false;
                 for (Product product : orderDataStore.getAll().keySet()) {
                     if (product.getName().equals(newProduct.getName())) {
-                        if(modifier.equals("add")){
-                            orderDataStore.increaseQuantity(product);}
-                        else if (modifier.equals("del")){
+                        if (modifier.equals("add")) {
+                            orderDataStore.increaseQuantity(product);
+                        } else if (modifier.equals("del")) {
                             orderDataStore.decreaseQuantity(product);
                         }
                         inOrder = true;
@@ -64,9 +68,6 @@ public class UpdateCartServlet extends HttpServlet {
                 }
                 if (!inOrder) orderDataStore.addToCart(newProduct, 1);
             }
-        }
-        catch (NoSuchElementException e) {
-            System.out.println(e.getMessage());
         }
 
         Gson gson = new Gson();
