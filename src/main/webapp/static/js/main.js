@@ -6,7 +6,7 @@ async function updateCart(data, callback) {
 }
 
 window.onload = () => {
-    updateCart("", showCartItems)
+    updateCart("?name=show", showCartItems)
     let cartSize = document.querySelector(".cart-size");
     cartSize.textContent = cartSize.dataset.value;
     let addToCartButtons = document.querySelectorAll(".btn-success");
@@ -232,7 +232,7 @@ function showCartItems(items) {
         })
 
         emptyCart.onclick = function () {
-            updateCart("clear", showCartItems)
+            updateCart("?name=clear", showCartItems)
         }
     }, 1000)
 
