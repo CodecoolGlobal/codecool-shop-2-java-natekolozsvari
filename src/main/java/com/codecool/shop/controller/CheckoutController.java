@@ -54,14 +54,7 @@ public class CheckoutController extends HttpServlet {
         UserOrder userOrder = new UserOrder(id, name, email, phoneNumber, country, address, city, zip);
         UserOrderDao userOrderDao = UserOrderDaoMem.getInstance();
         userOrderDao.add(userOrder);
-
-        String payMethod = req.getParameter("payMethod");
-        if(payMethod.equals("card")) {
-            resp.sendRedirect(req.getContextPath() + "/payment?order_id=" + id);
-        }
-        else {
-            resp.sendRedirect(req.getContextPath() + "/paypal?order_id=" + id);
-        }
+        resp.sendRedirect(req.getContextPath() + "/payment?order_id=" + id);
     }
 
 }
