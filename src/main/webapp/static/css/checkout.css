@@ -46,3 +46,10 @@ input[type=email]{
 {
     float: right;
 }
+body{
+    background-image: url("../img/background.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+    font-family: 'South Park', sans-serif;
+}

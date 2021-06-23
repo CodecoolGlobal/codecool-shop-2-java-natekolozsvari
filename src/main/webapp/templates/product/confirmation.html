@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="author" content="Codecool"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+  <title>Codecool Shop</title>
+
+  <!-- Bootstrap components -->
+  <!-- Latest compiled and minified Jquery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+  <!--Latest compiled and minified Popper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+          integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+          crossorigin="anonymous"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+          integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+          crossorigin="anonymous"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!-- End of Bootstrap components -->
+
+  <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
+
+  <script type='module' src='/static/js/main.js' defer></script>
+
+  <link href="http://fonts.cdnfonts.com/css/south-park" rel="stylesheet">
+
+
+</head>
+
+<header>
+
+
+
+
+
+
+</header>
+<body>
+
+
+
+<div id="mySidenav" class="sidenav">
+  <h1 style="text-align: center; color: white; font-size: 48px;">Filter by</h1>
+  <a href="javascript:void(0)" class="closebtn" id="close-btn">&times;</a>
+  <h2 style="color: white; margin-left: 15px; margin-top: 50px; font-size: 28px">Category</h2>
+  <div th:each="category: ${categories}">
+    <div class="form-check" style="margin-left: 40px; color: white">
+      <input class="form-check-input category-check" type="checkbox" value="" th:id="${category.name}+'-check'" checked>
+      <label class="form-check-label category-check-label" th:for="${category.name}+'-check'"
+             th:text="${category.name} +' ('+${category.products.size()}+')'">
+        Category name
+      </label>
+    </div>
+  </div>
+  <div>
+    <a href='#' id="category-select" class="nav-link select">Select all</a>
+    <a href='#' id="category-clear" class="nav-link clear">Clear all</a>
+  </div>
+
+  <h2 style="color: white; margin-left: 15px; margin-top: 50px; font-size: 28px;">Supplier</h2>
+  <div th:each="supplier: ${suppliers}">
+    <div class="form-check" style="margin-left: 40px; color: white">
+      <input class="form-check-input supplier-check" type="checkbox" value="" th:id="${supplier.name}+'-check'" checked>
+      <label class="form-check-label supplier-check-label" th:for="${supplier.name}+'-check'"
+             th:text="${supplier.name} +' ('+${supplier.products.size()}+')'">
+        Category name
+      </label>
+
+    </div>
+  </div>
+  <div>
+    <a href='#' id="supplier-select" class="nav-link select">Select all</a>
+    <a href='#' id="supplier-clear" class="nav-link clear">Clear all</a>
+  </div>
+
+</div>
+
+<div class="topnav">
+  <a href="/">Home</a>
+  <a class="filter" id="filter-btn" style="cursor: pointer;" href="#">Filter</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+
+  <a class="login" href="#">Login</a>
+
+  <a class="shopcart" href="#">
+    <i class="fas fa-shopping-cart cart-button"></i>
+    <i class="cart-size" th:data-value="${cartSize}"></i>
+  </a>
+
+
+</div>
+
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+
+    <p id="emptyCart">Your cart is empty!</p>
+    <span class="close">Close</span>
+  </div>
+
+
+</div>
+
+<div id="main">
+  <div>
+    <h1 style="text-align: center;">SouthCool Shop</h1>
+  </div>
+
+  <div th:replace="footer.html :: copy"></div>
+</div>
+</div>
+
+</body>
+</html>
