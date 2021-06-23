@@ -228,7 +228,6 @@ function showCartItems(items) {
                         updateCart(fetchParam, showCartItems);
 
                         cartSize.textContent = (parseInt(cartSize.textContent) - 1).toString()
-
                         inputF.textContent = parseInt(inputF.textContent)-1;
                         if(inputF.textContent === '0'){
                             inputF.parentElement.parentElement.remove();
