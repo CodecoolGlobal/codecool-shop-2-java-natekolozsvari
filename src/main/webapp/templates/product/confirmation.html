@@ -123,7 +123,9 @@
             <li th:text="${product.key.name} + ' | price: ' + ${product.key.defaultPrice} + ' | quantity: ' + ${product.value}"></li>
         </ul>
     </div>
-    <div th:replace="footer.html :: copy"></div>
+    <div class="mainFooter">
+        <div th:replace="footer.html :: copy"></div>
+    </div>
 </div>
 </div>
 
