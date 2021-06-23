@@ -19,7 +19,8 @@ body
 }
 .container {
     background-color: #e9ecef;
-    padding: 5px 20px 15px 20px;
+    padding: 15px 20px 15px 20px;
+    margin-top: 75px;
     border: 1px solid lightgrey;
     border-radius: 3px;
     font-family: 'South Park', sans-serif;
