@@ -237,6 +237,21 @@ function showCartItems(items) {
                 })
             }
         })
+        plusBtns.forEach(button => {
+            button.onclick = function() {
+                inputFields.forEach(inputF => {
+                    if(inputF.dataset.itemname === button.dataset.itemname) {
+                        let cartSize = document.querySelector(".cart-size");
+                        let productName = button.dataset.itemname;
+                        let mod = "add";
+                        let fetchParam = `?name=${productName}&mod=${mod}`;
+                        updateCart(fetchParam, showCartItems);
+                        cartSize.textContent = (parseInt(cartSize.textContent) + 1).toString();
+                        inputF.value += 1;
+                    }
+                })
+            }
+        })
 
         emptyCart.onclick = function () {
             updateCart("?name=clear", showCartItems);
