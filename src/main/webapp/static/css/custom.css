@@ -246,5 +246,10 @@ img {
     cursor: pointer;
 }
 
-
+.cartFooter {
+    color: black;
+    float: right;
+    font-size: 18px;
+    font-weight: bold; cursor:pointer;"
+}
 

@@ -190,10 +190,7 @@ function showCartItems(items) {
 
     modalC.insertAdjacentHTML("beforeend", `<p>__________________________________________</p>`);
     modalC.insertAdjacentHTML("beforeend", `<div class="totalPrice"><p style="float: right">Total: ${totalPrice.toFixed(2)}</p></div>`);
-    modalC.insertAdjacentHTML("beforeend", `<br><div class="cartFooter"><span class="close" style="color: black;
-    float: right;
-    font-size: 18px;
-    font-weight: bold; cursor:pointer;">Close</span> ${checkoutTag} </div>`)
+    modalC.insertAdjacentHTML("beforeend", `<br><div class="cartFooter"><span class="close">Close</span> ${checkoutTag} </div>`)
 
 
     setTimeout(() => {
