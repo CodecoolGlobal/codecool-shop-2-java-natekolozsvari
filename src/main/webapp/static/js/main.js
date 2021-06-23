@@ -220,14 +220,17 @@ function showCartItems(items) {
                     if(inputF.dataset.itemname === button.dataset.itemname && inputF.value > 0){
                         let cartSize = document.querySelector(".cart-size");
                         let productName = button.dataset.itemname;
+                        console.log(productName)
                         let del = "del";
                         let fetchParam = `?name=${productName}&mod=${del}`;
                         updateCart(fetchParam, showCartItems);
+
                         cartSize.textContent = (parseInt(cartSize.textContent) - 1).toString()
-                        if(cartSize.textContent == 0){
-                            emptyCartTags();
-                        }
+
                     inputF.value -= 1;
+                        if(inputF.value === 0){
+                            updateCart(fetchParam, showCartItems);
+                        }
                 }
                 })
             }
