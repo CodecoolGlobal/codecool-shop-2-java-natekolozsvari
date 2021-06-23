@@ -35,6 +35,7 @@
 <body>
 <div class="container">
     <h3>Payment</h3>
+    <h5 th:text="'Total price: ' + ${total_price} + ' USD'"></h5>
     <form name="paymentForm" method="post" action="payment">
         <label for="cName">Name on Card</label>
         <input type="text" id="cName" name="cardName" placeholder="Eric Cartman">
