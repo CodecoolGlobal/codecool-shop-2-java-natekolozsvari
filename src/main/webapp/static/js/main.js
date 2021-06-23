@@ -30,7 +30,7 @@ window.onload = () => {
 function initButtons() {
     let filterBtn = document.getElementById('filter-btn');
     filterBtn.addEventListener('click', function () {
-        if (this.parentElement.parentElement.style.marginLeft === '300px') {
+        if (document.getElementById('mySidenav').style.width === '300px') {
             closeNav();
         } else {
             openNav();
@@ -139,7 +139,11 @@ function cartHoverListener() {
 
 // When the user clicks on the button, open the modal
     btn.onclick = function () {
-        modal.style.display = "block";
+        if (modal.style.display === "none") {
+            modal.style.display = "block";
+        } else {
+            modal.style.display = "none";
+        }
     }
 
 // When the user clicks on <span> (x), close the modal
