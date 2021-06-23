@@ -193,7 +193,7 @@ function showCartItems(items) {
     }
 
     modalC.insertAdjacentHTML("beforeend", `<p>__________________________________________</p>`);
-    modalC.insertAdjacentHTML("beforeend", `<div class="totalPrice"><p style="float: right">Total: <span id="total-price">${totalPrice.toFixed(2)}</span></p></div>`);
+    modalC.insertAdjacentHTML("beforeend", `<div class="totalPrice"><p style="float: right">Total: <span id="total-price">${totalPrice.toFixed(2)}</span> USD</p></div>`);
     modalC.insertAdjacentHTML("beforeend", `<br><span class="empty_cart close">Empty Cart</span><br><div class="cartFooter"><span class="close close_button">Close</span> ${checkoutTag} </div>`)
 
 

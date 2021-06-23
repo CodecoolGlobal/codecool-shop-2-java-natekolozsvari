@@ -48,7 +48,7 @@ public class UpdateCartServlet extends HttpServlet {
         if (productName.equals("show")) {}
 
         else if (productName.equals("clear")) {
-            orderDataStore.getShoppingCart().clear();
+            orderDataStore.clearCart();
         }
 
         else {

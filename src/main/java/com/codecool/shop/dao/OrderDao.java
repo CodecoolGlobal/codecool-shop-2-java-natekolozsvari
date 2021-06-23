@@ -14,5 +14,6 @@ public interface OrderDao {
     public void decreaseQuantity(Product product);
     public Map<Product, Integer> getShoppingCart();
     public float getPrice();
+    public void clearCart();
     Map<Product, Integer> getAll();
 }

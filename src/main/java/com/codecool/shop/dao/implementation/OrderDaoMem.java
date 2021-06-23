@@ -63,6 +63,11 @@ public class OrderDaoMem implements OrderDao {
         return price;
     }
 
+    public void clearCart() {
+        shoppingCart = new HashMap<>();
+        price = 0;
+    }
+
     @Override
     public Map<Product, Integer> getAll() {
         return shoppingCart;
