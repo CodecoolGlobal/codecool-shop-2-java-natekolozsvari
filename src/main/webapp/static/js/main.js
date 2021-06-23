@@ -6,6 +6,7 @@ async function updateCart(data, callback) {
 }
 
 window.onload = () => {
+    updateCart("", showCartItems)
     let cartSize = document.querySelector(".cart-size");
     cartSize.textContent = cartSize.dataset.value;
     let addToCartButtons = document.querySelectorAll(".btn-success");
