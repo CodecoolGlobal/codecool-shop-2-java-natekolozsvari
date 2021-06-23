@@ -36,6 +36,7 @@
 <div class="container">
     <button class="back-button" onclick="location.href='/';">Back</button>
     <h3>Billing Address</h3>
+    <h5 th:text="'Total price: ' + ${total_price} + ' USD'"></h5>
     <form name="checkoutForm" method="post" action="checkout">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" placeholder="Eric Cartman">
