@@ -30,7 +30,7 @@ window.onload = () => {
 function initButtons() {
     let filterBtn = document.getElementById('filter-btn');
     filterBtn.addEventListener('click', function () {
-        if (this.parentElement.parentElement.style.marginLeft === '300px') {
+        if (document.getElementById('mySidenav').style.width === '300px') {
             closeNav();
         } else {
             openNav();
@@ -139,7 +139,11 @@ function cartHoverListener() {
 
 // When the user clicks on the button, open the modal
     btn.onclick = function () {
-        modal.style.display = "block";
+        if (modal.style.display === "none") {
+            modal.style.display = "block";
+        } else {
+            modal.style.display = "none";
+        }
     }
 
 // When the user clicks on <span> (x), close the modal
@@ -218,14 +222,17 @@ function showCartItems(items) {
                     if(inputF.dataset.itemname === button.dataset.itemname && inputF.value > 0){
                         let cartSize = document.querySelector(".cart-size");
                         let productName = button.dataset.itemname;
+                        console.log(productName)
                         let del = "del";
                         let fetchParam = `?name=${productName}&mod=${del}`;
                         updateCart(fetchParam, showCartItems);
+
                         cartSize.textContent = (parseInt(cartSize.textContent) - 1).toString()
-                        if(cartSize.textContent == 0){
-                            emptyCartTags();
-                        }
+
                     inputF.value -= 1;
+                        if(inputF.value === 0){
+                            updateCart(fetchParam, showCartItems);
+                        }
                 }
                 })
             }
