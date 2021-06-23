@@ -232,7 +232,9 @@ function showCartItems(items) {
         })
 
         emptyCart.onclick = function () {
-            updateCart("?name=clear", showCartItems)
+            updateCart("?name=clear", showCartItems);
+            let cartSize = document.querySelector(".cart-size");
+            cartSize.textContent = "0"
         }
     }, 1000)
 
