@@ -57,7 +57,7 @@ public class PaymentController extends HttpServlet {
             ioException.printStackTrace();
        }
 
-        resp.sendRedirect(req.getContextPath() + "/");
+        resp.sendRedirect(req.getContextPath() + "/confirmation");
     }
 
 }
