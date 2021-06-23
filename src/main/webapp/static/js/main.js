@@ -181,9 +181,9 @@ function showCartItems(items) {
 <br>
 <div><p id="itemPrice" style="float:left;font-size:13px;">Price: ${(price * amount).toFixed(2)} USD</p>
 
-<pre id="plusBtn" data-itemname="${name}" style="float:right;font-weight: bold;font-size: 20px;"> +</pre>
-<input style="float:right; font-size: 14px" class="amountOfItem" data-itemname="${name}" value="${amount}" size="1">
-<pre style="float:right;font-weight: bold;font-size: 20px;" id="minusBtn" data-itemname="${name}">- </pre></div>
+<pre id="plusBtn" data-itemname="${name}" style="float:right;font-weight: bold;font-size: 20px;cursor:pointer;"> +</pre>
+<p style="float:right; font-size: 14px" class="amountOfItem" data-itemname="${name}">${amount}</p>
+<pre style="float:right;font-weight: bold;font-size: 20px;cursor:pointer;" id="minusBtn" data-itemname="${name}">- </pre></div>
 
 </div>
 `
@@ -219,7 +219,7 @@ function showCartItems(items) {
             button.onclick = function(){
                 console.log(button.dataset.itemname)
                 inputFields.forEach(inputF =>{
-                    if(inputF.dataset.itemname === button.dataset.itemname && inputF.value > 0){
+                    if(inputF.dataset.itemname === button.dataset.itemname && parseInt(inputF.textContent) > 0){
                         let cartSize = document.querySelector(".cart-size");
                         let productName = button.dataset.itemname;
                         console.log(productName)
@@ -229,8 +229,8 @@ function showCartItems(items) {
 
                         cartSize.textContent = (parseInt(cartSize.textContent) - 1).toString()
 
-                    inputF.value -= 1;
-                        if(inputF.value === 0){
+                    inputF.textContent = parseInt(inputF.textContent)-1;
+                        if(inputF.textContent === "0"){
                             updateCart(fetchParam, showCartItems);
                         }
                 }
