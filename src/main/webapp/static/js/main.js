@@ -229,6 +229,18 @@ function showCartItems(items) {
 
                         cartSize.textContent = (parseInt(cartSize.textContent) - 1).toString()
                         inputF.textContent = parseInt(inputF.textContent)-1;
+                        setTimeout(()=>{
+
+                            if(cartSize.textContent ==="0"){
+                                emptyCartTags()
+                                setTimeout(()=>{
+                                    let span = document.querySelector(".close");
+                                    span.onclick = function () {
+                                        modal.style.display = "none";
+                                    }
+                                },500)
+                            }
+                        },100)
                         if(inputF.textContent === '0'){
                             inputF.parentElement.parentElement.remove();
                         }
@@ -256,6 +268,17 @@ function showCartItems(items) {
             updateCart("?name=clear", showCartItems);
             let cartSize = document.querySelector(".cart-size");
             cartSize.textContent = "0"
+            setTimeout(()=>{
+                emptyCartTags()
+                setTimeout(()=>{
+                    let span = document.querySelector(".close");
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+                },500)
+
+
+            },50)
         }
     }, 1000)
 
