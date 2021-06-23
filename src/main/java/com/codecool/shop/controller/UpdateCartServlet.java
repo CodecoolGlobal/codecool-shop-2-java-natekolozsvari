@@ -41,21 +41,24 @@ public class UpdateCartServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         OrderDao orderDataStore = OrderDaoMem.getInstance();
         ProductDao productDao = ProductDaoMem.getInstance();
-        Enumeration params = request.getParameterNames();
-        String[] paramValues = null;
-        try {
-            String paramName = (String) params.nextElement();
-            paramValues = request.getParameterValues(paramName);
 
-            String productName = paramValues[0];
+        try {
+
+
+            String productName = request.getParameter("name");
+            String modifier = request.getParameter("mod");
             Product newProduct = productDao.getByName(productName);
 
 
-            if (paramValues != null) {
+            if (productName != null) {
                 boolean inOrder = false;
                 for (Product product : orderDataStore.getAll().keySet()) {
                     if (product.getName().equals(newProduct.getName())) {
-                        orderDataStore.increaseQuantity(product);
+                        if(modifier.equals("add")){
+                            orderDataStore.increaseQuantity(product);}
+                        else if (modifier.equals("del")){
+                            orderDataStore.decreaseQuantity(product);
+                        }
                         inOrder = true;
                     }
                 }

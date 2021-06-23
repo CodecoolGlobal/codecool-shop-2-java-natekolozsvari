@@ -14,7 +14,8 @@ window.onload = () => {
 
         button.addEventListener('click', () => {
             let productName = button.dataset.name;
-            let fetchParam = `?name=${productName}`;
+            let add = "add";
+            let fetchParam = `?name=${productName}&mod=${add}`;
             updateCart(fetchParam, showCartItems);
             cartSize.textContent = (parseInt(cartSize.textContent) + 1).toString()
         });
@@ -176,9 +177,9 @@ function showCartItems(items) {
 <br>
 <div><p id="itemPrice" style="float:left;font-size:13px;">Price: ${(price * amount).toFixed(2)} USD</p>
 
-<pre id="plusBtn" data-itemName="${name}" style="float:right;font-weight: bold;font-size: 20px;"> +</pre>
-<input style="float:right; font-size: 14px" class="amountOfItem" data-itemName="${name}" value="${amount}" size="1">
-<pre style="float:right;font-weight: bold;font-size: 20px;" id="minusBtn" data-itemName="${name}">- </pre></div>
+<pre id="plusBtn" data-itemname="${name}" style="float:right;font-weight: bold;font-size: 20px;"> +</pre>
+<input style="float:right; font-size: 14px" class="amountOfItem" data-itemname="${name}" value="${amount}" size="1">
+<pre style="float:right;font-weight: bold;font-size: 20px;" id="minusBtn" data-itemname="${name}">- </pre></div>
 
 </div>
 `
@@ -199,8 +200,9 @@ function showCartItems(items) {
         let span = document.querySelector(".close");
         let modal = document.getElementById("myModal");
         let checkout = document.querySelector(".checkout");
-        let minusBtns = document.querySelectorAll(".minusBtn");
-        let plusBtns = document.querySelectorAll(".plusBtn");
+        let minusBtns = document.querySelectorAll("#minusBtn");
+        console.log(minusBtns)
+        let plusBtns = document.querySelectorAll("#plusBtn");
         let inputFields = document.querySelectorAll(".amountOfItem");
 
         span.onclick = function () {
@@ -213,8 +215,18 @@ function showCartItems(items) {
 
         minusBtns.forEach(button =>{
             button.onclick = function(){
+                console.log(button.dataset.itemname)
                 inputFields.forEach(inputF =>{
-                    if(inputF.dataset.name === button.dataset.name){
+                    if(inputF.dataset.itemname === button.dataset.itemname && inputF.value > 0){
+                        let cartSize = document.querySelector(".cart-size");
+                        let productName = button.dataset.itemname;
+                        let del = "del";
+                        let fetchParam = `?name=${productName}&mod=${del}`;
+                        updateCart(fetchParam, showCartItems);
+                        cartSize.textContent = (parseInt(cartSize.textContent) - 1).toString()
+                        if(cartSize.textContent == 0){
+                            emptyCartTags();
+                        }
                     inputF.value -= 1;
                 }
                 })
@@ -225,6 +237,14 @@ function showCartItems(items) {
     }, 1000)
 
 }
+
+function emptyCartTags(){
+    let modalC = document.querySelector(".modal-content");
+    modalC.innerHTML = '';
+    modalC.insertAdjacentHTML("beforeend", `<p id="emptyCart">Your cart is empty!</p>
+        <span class="close">Close</span>`)
+}
+
 
 
 
