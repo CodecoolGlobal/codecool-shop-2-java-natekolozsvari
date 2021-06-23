@@ -179,7 +179,7 @@ function showCartItems(items) {
         let itemTag = `<div class="cartItem">
 <p id="itemName" style="float:left; font-size:17px; width:100%;">${name}</p>
 <br>
-<div><p id="itemPrice" style="float:left;font-size:13px;">Price: ${(price * amount).toFixed(2)} USD</p>
+<div><p id="itemPrice" style="float:left;font-size:13px;">Price: <span class="item-price">${(price * amount).toFixed(2)}</span> USD</p>
 
 <pre id="plusBtn" data-itemname="${name}" style="float:right;font-weight: bold;font-size: 20px;cursor:pointer;"> +</pre>
 <p style="float:right; font-size: 14px" class="amountOfItem" data-itemname="${name}">${amount}</p>
@@ -193,7 +193,7 @@ function showCartItems(items) {
     }
 
     modalC.insertAdjacentHTML("beforeend", `<p>__________________________________________</p>`);
-    modalC.insertAdjacentHTML("beforeend", `<div class="totalPrice"><p style="float: right">Total: ${totalPrice.toFixed(2)}</p></div>`);
+    modalC.insertAdjacentHTML("beforeend", `<div class="totalPrice"><p style="float: right">Total: <span id="total-price">${totalPrice.toFixed(2)}</span></p></div>`);
     modalC.insertAdjacentHTML("beforeend", `<br><span class="empty_cart close">Empty Cart</span><br><div class="cartFooter"><span class="close close_button">Close</span> ${checkoutTag} </div>`)
 
 
@@ -230,6 +230,7 @@ function showCartItems(items) {
                         cartSize.textContent = (parseInt(cartSize.textContent) - 1).toString()
                         inputF.textContent = parseInt(inputF.textContent)-1;
                         if(inputF.textContent === '0'){
+                            document.getElementById('total-price').textContent = (parseFloat(document.getElementById('total-price').textContent) - parseFloat(inputF.parentElement.querySelector('.item-price').textContent)).toFixed(2).toString();
                             inputF.parentElement.parentElement.remove();
                         }
                 }
