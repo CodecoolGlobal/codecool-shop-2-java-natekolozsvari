@@ -139,10 +139,10 @@ function cartHoverListener() {
 
 // When the user clicks on the button, open the modal
     btn.onclick = function () {
-        if (modal.style.display === "none") {
-            modal.style.display = "block";
-        } else {
+        if (modal.style.display === "block") {
             modal.style.display = "none";
+        } else {
+            modal.style.display = "block";
         }
     }
 
