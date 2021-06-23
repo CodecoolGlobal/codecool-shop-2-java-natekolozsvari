@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
 
 @WebServlet(urlPatterns = {"/updateCart"})
@@ -42,26 +43,33 @@ public class UpdateCartServlet extends HttpServlet {
         ProductDao productDao = ProductDaoMem.getInstance();
         Enumeration params = request.getParameterNames();
         String[] paramValues = null;
-        String paramName = (String) params.nextElement();
-        paramValues = request.getParameterValues(paramName);
+        try {
+            String paramName = (String) params.nextElement();
+            paramValues = request.getParameterValues(paramName);
 
-        String productName = paramValues[0];
-        Product newProduct = productDao.getByName(productName);
+            String productName = paramValues[0];
+            Product newProduct = productDao.getByName(productName);
 
-        boolean inOrder = false;
-        for (Product product : orderDataStore.getAll().keySet()) {
-            if (product.getName().equals(newProduct.getName())) {
-                orderDataStore.increaseQuantity(product);
-                inOrder = true;
+
+            if (paramValues != null) {
+                boolean inOrder = false;
+                for (Product product : orderDataStore.getAll().keySet()) {
+                    if (product.getName().equals(newProduct.getName())) {
+                        orderDataStore.increaseQuantity(product);
+                        inOrder = true;
+                    }
+                }
+                if (!inOrder) orderDataStore.addToCart(newProduct, 1);
             }
         }
-        if (!inOrder) orderDataStore.addToCart(newProduct, 1);
+        catch (NoSuchElementException e) {
+            System.out.println(e.getMessage());
+        }
 
         Gson gson = new Gson();
 
         String json = gson.toJson(orderDataStore.getShoppingCart());
         out.println(json);
-
     }
 
 }
