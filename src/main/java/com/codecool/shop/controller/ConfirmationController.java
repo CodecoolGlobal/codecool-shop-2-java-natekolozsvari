@@ -33,13 +33,13 @@ public class ConfirmationController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        OrderDao orderDaoMem = OrderDaoMem.getInstance();
         DecimalFormat df = new DecimalFormat("0.00");
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("order", OrderDaoMem.getInstance().getAll());
-        context.setVariable("total_price", df.format(OrderDaoMem.getInstance().getPrice()));
-
+        context.setVariable("order", orderDaoMem.getAll());
+        context.setVariable("total_price", df.format(orderDaoMem.getPrice()));
+        orderDaoMem.clearCart();
         engine.process("product/confirmation.html", context, resp.getWriter());
     }
 }
