@@ -38,7 +38,8 @@ DROP TABLE IF EXISTS orders;
 CREATE TABLE orders (
     id serial NOT NULL PRIMARY KEY,
     user_id integer NOT NULL,
-    date timestamp NOT NULL ,
+    date timestamp NOT NULL,
+    order_status text NOT NULL,
     total_price money NOT NULL,
     product_list text[] NOT NULL
 );
