@@ -220,6 +220,14 @@ img {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+#logInModal {
+    left: 93.8rem;
+}
+
+#signUpModal {
+    left: 96rem;
+}
+
 /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
@@ -233,6 +241,7 @@ img {
 }
 
 /* The Close Button */
+.no-acc,
 .already-reg,
 .close {
     color: black;
@@ -241,6 +250,7 @@ img {
     font-weight: bold;
 }
 
+.no-acc,
 .already-reg,
 .close:hover,
 .close:focus {

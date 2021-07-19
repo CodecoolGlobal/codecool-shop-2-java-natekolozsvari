@@ -94,7 +94,7 @@
     <a href="#about">About</a>
 
     <a id="signup-btn" class="login" href="#">Signup</a>
-    <a class="login" href="#">Login</a>
+    <a id="login-btn" class="login" href="#">Login</a>
 
         <a class="shopcart" href="#">
             <i class="fas fa-shopping-cart cart-button"></i>
@@ -135,6 +135,25 @@
         <span style="float: left;font-size: 16px;
     font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Register</span></div>
         </div>
+</div>
+
+<div id="logInModal" class="modal">
+    <div class="modal-content">
+        <h4 style="margin: 0 auto">Log in</h4>
+        <form name="logInForm" method="post">
+            <label for="logInEmail">Email</label>
+            <input type="email" id="logInEmail" name="email">
+            <label for="logInPw">Password</label>
+            <input type="password" id="logInPw" name="pw">
+        </form>
+        <br>
+        <span class="no-acc" style="color: grey">I do not have an account</span>
+        <br>
+        <div>
+            <span class="close">Close</span>
+            <span style="float: left;font-size: 16px;
+    font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Log in</span></div>
+    </div>
 </div>
 
 <div id="main">
