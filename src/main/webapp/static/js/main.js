@@ -204,7 +204,7 @@ function showCartItems(items) {
 
     modalC.insertAdjacentHTML("beforeend", `<p>__________________________________________</p>`);
     modalC.insertAdjacentHTML("beforeend", `<div class="totalPrice"><p style="float: right">Total: <span id="total-price">${totalPrice.toFixed(2)}</span> USD</p></div>`);
-    modalC.insertAdjacentHTML("beforeend", `<br><span class="empty_cart close">Empty Cart</span><br><div class="cartFooter"><span class="close close_button">Close</span> ${checkoutTag} </div>`)
+    modalC.insertAdjacentHTML("beforeend", `<br><span class="empty_cart close">Empty Cart</span><br><span class="save_cart close">Save Cart</span><br><div class="cartFooter"><span class="close close_button">Close</span> ${checkoutTag} </div>`)
 
 
     setTimeout(() => {
@@ -215,7 +215,9 @@ function showCartItems(items) {
         console.log(minusBtns)
         let plusBtns = document.querySelectorAll("#plusBtn");
         let inputFields = document.querySelectorAll(".amountOfItem");
-        let emptyCart = document.querySelector(".empty_cart")
+        let emptyCart = document.querySelector(".empty_cart");
+        let saveCart = document.querySelector(".save_cart")
+
 
         span.onclick = function () {
             modal.style.display = "none";
@@ -291,8 +293,16 @@ function showCartItems(items) {
 
             },50)
         }
-    }, 1000)
 
+        saveCart.onclick = function () {
+            fetch(`save-cart`, {
+                method: 'GET',
+                credentials: "include",
+                cache: "no-cache",
+                headers: new Headers ({"content-type": "application/json"})
+            })
+        }
+    }, 1000)
 }
 
 function emptyCartTags(){

@@ -10,6 +10,8 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.UserOrderDaoMem;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.service.UserOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -28,6 +30,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebServlet(urlPatterns = {"/payment"})
 public class PaymentController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
+
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -58,6 +63,7 @@ public class PaymentController extends HttpServlet {
                     "/" + fileName +
                     ".json"), userOrder);
         } catch (IOException ioException) {
+            logger.warn("IOException was thrown, when tried to create file.");
             ioException.printStackTrace();
        }
 

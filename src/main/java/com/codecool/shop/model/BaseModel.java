@@ -1,9 +1,15 @@
 package com.codecool.shop.model;
 
 
+import com.codecool.shop.controller.PaymentController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Field;
 
 public class BaseModel {
+    private static final Logger logger = LoggerFactory.getLogger(BaseModel.class);
+
 
     protected int id;
     protected String name;
@@ -55,7 +61,7 @@ public class BaseModel {
                     sb.append(field.getName() + ":" + value + ",");
                 }
             } catch (IllegalAccessException e) {
-
+                logger.warn("IllegalAccessException was thrown when tried to convert BaseModel object to string.");
             }
         }
         return sb.toString();
