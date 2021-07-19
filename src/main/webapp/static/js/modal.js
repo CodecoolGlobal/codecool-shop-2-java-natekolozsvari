@@ -82,7 +82,7 @@ function showCartItems(items) {
     document.querySelector('.cart-size').innerHTML = totalItems.toString();
     modalC.insertAdjacentHTML("beforeend", `<p>__________________________________________</p>`);
     modalC.insertAdjacentHTML("beforeend", `<div class="totalPrice"><p style="float: right">Total: ${totalPrice.toFixed(2)}</p></div>`);
-    modalC.insertAdjacentHTML("beforeend", `<br><span class="empty_cart close">Empty Cart</span><br><div class="cartFooter"><span class="close close_button">Close</span> ${checkoutTag} </div>`)
+    modalC.insertAdjacentHTML("beforeend", `<br><span class="empty_cart close">Empty Cart</span><br><span class="save_cart close">Save Cart</span><br><div class="cartFooter"><span class="close close_button">Close</span><br><div class="cartFooter"><span class="close close_button">Close</span> ${checkoutTag} </div>`)
 
 
     setTimeout(() => {
@@ -94,6 +94,8 @@ function showCartItems(items) {
         let plusBtns = document.querySelectorAll("#plusBtn");
         let inputFields = document.querySelectorAll(".amountOfItem");
         let emptyCart = document.querySelector(".empty_cart")
+        let saveCart = document.querySelector(".save_cart")
+
 
         span.onclick = function () {
             modal.style.display = "none";
@@ -145,6 +147,15 @@ function showCartItems(items) {
             updateCart("?name=clear", showCartItems);
             let cartSize = document.querySelector(".cart-size");
             cartSize.textContent = "0"
+        }
+
+        saveCart.onclick = function () {
+            fetch(`save-cart`, {
+                method: 'GET',
+                credentials: "include",
+                cache: "no-cache",
+                headers: new Headers ({"content-type": "application/json"})
+            })
         }
     }, 1000)
 
