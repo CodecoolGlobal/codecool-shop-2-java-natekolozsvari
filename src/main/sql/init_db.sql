@@ -24,7 +24,7 @@ CREATE TABLE suppliers(
     description text NOT NULL
 );
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
     id serial NOT NULL PRIMARY KEY,
     name text NOT NULL,
@@ -53,6 +53,20 @@ CREATE TABLE cart (
     product_list text[] NOT NULL
 );
 
+
+DROP TABLE IF EXISTS billingInfo;
+CREATE TABLE  billingInfo (
+    id serial NOT NULL PRIMARY KEY,
+    user_id integer NOT NULL,
+    name text NOT NULL,
+    email text NOT NULL,
+    phoneNumber text NOT NULL,
+    country text NOT NULL,
+    address text NOT NULL,
+    city text NOT NULL,
+    zip_code integer NOT NULL
+);
+
 ALTER TABLE ONLY products
     ADD CONSTRAINT fk_productCategories_id FOREIGN KEY (productCategory_id) REFERENCES productCategories(id);
 
@@ -63,4 +77,7 @@ ALTER TABLE ONLY orders
     ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 
 ALTER TABLE ONLY cart
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE ONLY billingInfo
     ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
