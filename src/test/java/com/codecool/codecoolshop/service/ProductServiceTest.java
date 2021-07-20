@@ -44,5 +44,19 @@ public class ProductServiceTest {
         assertNull(productService.getProductByName("STOP touching me ELMO"));
     }
 
+    @Test
+    void getProductCategory_ProductCategoryIsExists_returnTrue() {
+        ProductCategory toy = new ProductCategory("Toy", "Toy maker", "Toys for kids and adults only");
+        when(productCategoryDao.find(1)).thenReturn(toy);
+        assertEquals(toy, productService.getProductCategory(1));
+    }
+
+    @Test
+    void getProductCategory_ProductCategoryIsNotExists_returnNull() {
+        when(productCategoryDao.find(1)).thenReturn(null);
+        assertNull(productService.getProductCategory(1));
+    }
+
+
 
 }
