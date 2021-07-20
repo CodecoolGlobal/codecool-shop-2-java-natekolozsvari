@@ -20,17 +20,17 @@ public class ProductDaoJdbc implements ProductDao {
     @Override
     public void add(Product product) {
         try (Connection conn = dataSource.getConnection()) {
-            String productCategoryName = product.getProductCategory().getName();
-            String productSupplierName = product.getSupplier().getName();
             String sql = "INSERT INTO products (name, description, defaultprice, defaultcurrency, productcategory_id,supplier_id) VALUES (?, ?, ?, ?,?,?);";
-            String getCategoryId = String.format("SELECT id FROM productcategories WHERE name = %s", productCategoryName);
-            String getSupplierId = String.format("SELECT id FROM suppliers WHERE name = %s", productSupplierName);
+            String getCategoryId = "SELECT id FROM productcategories WHERE name = ?;";
+            String getSupplierId = "SELECT id FROM suppliers WHERE name = ?;";
 
             PreparedStatement st = conn.prepareStatement(getCategoryId);
+            st.setString(1,product.getProductCategory().getName());
             ResultSet rs = st.executeQuery();
             int categoryId = rs.getInt(1);
 
             PreparedStatement st1 = conn.prepareStatement(getSupplierId);
+            st1.setString(1,product.getSupplier().getName());
             ResultSet rs1 = st1.executeQuery();
             int supplierId = rs1.getInt(1);
 
@@ -58,9 +58,7 @@ public class ProductDaoJdbc implements ProductDao {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            if (!rs.next()) {
-                return null;
-            }
+            
             Product product = new Product(rs.getString(1),  rs.getFloat(3), rs.getString(2), rs.getString(4), new ProductCategory(rs.getString(5), rs.getString(6)),new Supplier(rs.getString(7)));
             product.setId(id);
             return product;
@@ -75,6 +73,7 @@ public class ProductDaoJdbc implements ProductDao {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "DELETE FROM products WHERE id = ?;";
             PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, id);
             st.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -102,8 +101,9 @@ public class ProductDaoJdbc implements ProductDao {
     @Override
     public List<Product> getBySupplier(Supplier supplier) {
         try (Connection conn = dataSource.getConnection()) {
-            String supplierName = supplier.getName();
-            String sql = String.format("SELECT name, description, defaultprice, defaultcurrency, p.name AS productcategory_name, p.department AS productcategory_department, s.name as supplier_name FROM products JOIN productcategories p on p.id = products.productcategory_id JOIN suppliers s on s.id = products.supplier_id WHERE s.name = %s;", supplierName);
+            String sql = "SELECT name, description, defaultprice, defaultcurrency, p.name AS productcategory_name, p.department AS productcategory_department, s.name as supplier_name FROM products JOIN productcategories p on p.id = products.productcategory_id JOIN suppliers s on s.id = products.supplier_id WHERE s.name = ?;";
+            PreparedStatement searchBy = conn.prepareStatement(sql);
+            searchBy.setString(1,supplier.getName());
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<Product> result = new ArrayList<>();
             while (rs.next()) {
@@ -120,8 +120,9 @@ public class ProductDaoJdbc implements ProductDao {
     @Override
     public List<Product> getByCategory(ProductCategory productCategory) {
         try (Connection conn = dataSource.getConnection()) {
-            String categoryName = productCategory.getName();
-            String sql = String.format("SELECT name, description, defaultprice, defaultcurrency, p.name AS productcategory_name, p.department AS productcategory_department, s.name as supplier_name FROM products JOIN productcategories p on p.id = products.productcategory_id JOIN suppliers s on s.id = products.supplier_id WHERE p.name = %s;", categoryName);
+            String sql = "SELECT name, description, defaultprice, defaultcurrency, p.name AS productcategory_name, p.department AS productcategory_department, s.name as supplier_name FROM products JOIN productcategories p on p.id = products.productcategory_id JOIN suppliers s on s.id = products.supplier_id WHERE s.name = ?;";
+            PreparedStatement searchBy = conn.prepareStatement(sql);
+            searchBy.setString(1,productCategory.getName());
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<Product> result = new ArrayList<>();
             while (rs.next()) {
@@ -140,6 +141,7 @@ public class ProductDaoJdbc implements ProductDao {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT name, description, defaultprice, defaultcurrency, p.name AS productcategory_name, p.department AS productcategory_department, s.name as supplier_name FROM products JOIN productcategories p on p.id = products.productcategory_id JOIN suppliers s on s.id = products.supplier_id WHERE products.name = ?;";
             PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1,name);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) {
                 return null;
