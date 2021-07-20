@@ -96,4 +96,21 @@ public class ProductServiceTest {
         when(productCategoryDao.getAll()).thenReturn(List.of());
         assertEquals(List.of(), productService.getAllProductsCategory());
     }
+
+    @Test
+    void getAllSuppliers_ThereAreMoreSuppliers_returnTrue() {
+        Supplier garrison = new Supplier("Garrison Corp.", "Mr. Garrison's Corporation supplier of futuristic vehicles");
+        Supplier wacky = new Supplier("Wacky Co.", "Supplier of the wild wacky action bike");
+        Supplier southpark = new Supplier("SouthPark Toys Inc.", "Creator of the best seller toys");
+        Supplier cartman = new Supplier("Cartman Ltd.", "Maker of top hit songs in USA");
+        when(supplierDao.getAll()).thenReturn(List.of(garrison, wacky, southpark, cartman));
+        assertEquals(List.of(garrison, wacky, southpark, cartman), productService.getAllSuppliers());
+    }
+
+    @Test
+    void getAllSuppliers_NoSuppliers_returnTrue() {
+        when(supplierDao.getAll()).thenReturn(List.of());
+        assertEquals(List.of(), productService.getAllSuppliers());
+    }
+
 }
