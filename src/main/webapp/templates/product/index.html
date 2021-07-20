@@ -119,7 +119,7 @@
 <div id="signUpModal" class="modal">
     <div class="modal-content">
         <h4 style="margin: 0 auto">Sign up</h4>
-        <form name="signUpForm" id="signUpForm" method="post" action="/signup">
+        <form name="signUpForm" id="signUpForm" method="post" action="/signup" onsubmit="event.preventDefault(); validateSignUp();">
             <label for="name">Username</label>
             <input type="text" id="name" name="name" required />
             <label for="email">Email</label>
@@ -136,6 +136,19 @@
     font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Register</button></div>
         </div>
 </div>
+
+<script type="text/javascript">
+    async function validateSignUp() {
+        let name = document.getElementById("name").textContent;
+        let email = document.getElementById("email").textContent;
+        let fetchParam = `?name=${name}&email=${email}`
+        let obj = await fetch(`/validate${fetchParam}`)
+            .then(response => response.json())
+            .catch(error => console.log(error));
+        console.log(obj);
+        return !(obj[name] === true || obj[email] === true);
+    }
+</script>
 
 <div id="logInModal" class="modal">
     <div class="modal-content">

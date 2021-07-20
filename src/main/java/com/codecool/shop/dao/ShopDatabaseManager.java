@@ -37,9 +37,16 @@ public class ShopDatabaseManager {
     }
 
 
-
     public void addUser(User user) {
         userDao.add(user);
+    }
+
+    public boolean doesNameExist(String name) {
+        return userDao.doesNameExist(name);
+    }
+
+    public boolean doesEmailExist(String email) {
+        return userDao.doesEmailExist(email);
     }
 
     private DataSource connect() throws SQLException, IOException {
