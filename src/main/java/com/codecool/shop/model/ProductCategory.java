@@ -7,7 +7,7 @@ public class ProductCategory extends BaseModel {
     private String department;
     private List<Product> products;
 
-    public ProductCategory(String name, String department, String description) {
+    public ProductCategory(String name, String department) {
         super(name);
         this.department = department;
         this.products = new ArrayList<>();
