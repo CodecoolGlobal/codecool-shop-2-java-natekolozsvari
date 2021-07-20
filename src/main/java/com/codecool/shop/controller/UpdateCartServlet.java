@@ -15,6 +15,8 @@ import com.codecool.shop.service.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -31,6 +33,7 @@ import java.util.NoSuchElementException;
 
 @WebServlet(urlPatterns = {"/updateCart"})
 public class UpdateCartServlet extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(UpdateCartServlet.class);
 
 
     @Override
@@ -74,6 +77,7 @@ public class UpdateCartServlet extends HttpServlet {
 
         String json = gson.toJson(orderDataStore.getShoppingCart());
         out.println(json);
+        logger.info("Successfully updated cart");
     }
 
 }

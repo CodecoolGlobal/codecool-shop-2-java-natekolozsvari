@@ -62,6 +62,7 @@ public class PaymentController extends HttpServlet {
             objectMapper.writeValue(new File("Orders" +
                     "/" + fileName +
                     ".json"), userOrder);
+            logger.info("Successfully saved order info");
         } catch (IOException ioException) {
             logger.warn("IOException was thrown, when tried to create file.");
             ioException.printStackTrace();

@@ -10,6 +10,8 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.UserOrderDaoMem;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.service.UserOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -28,6 +30,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
     public int id;
+    private static final Logger logger = LoggerFactory.getLogger(CheckoutController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -55,6 +58,7 @@ public class CheckoutController extends HttpServlet {
         UserOrderDao userOrderDao = UserOrderDaoMem.getInstance();
         userOrderDao.add(userOrder);
         resp.sendRedirect(req.getContextPath() + "/payment?order_id=" + id);
+        logger.info("Successfully added checkout info to order");
     }
 
 }
