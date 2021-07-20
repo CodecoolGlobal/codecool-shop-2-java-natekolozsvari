@@ -27,6 +27,7 @@ window.onload = () => {
     initSignUpModal();
     initLogInModal();
     cartHoverListener();
+    initLogOut();
 }
 
 function initButtons() {
@@ -401,5 +402,12 @@ function initLogInModal() {
         if (event.target === modal) {
             modal.style.display = "none";
         }
+    }
+}
+
+function initLogOut() {
+    let logOutButton = document.getElementById("logout-btn")
+    if (sessionStorage.getItem("loggedin") !== "false") {
+        logOutButton.style.display = "none";
     }
 }
