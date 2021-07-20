@@ -1,4 +1,4 @@
-package com.codecool.codecoolshop.service;
+package com.codecool.shop.service;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
@@ -6,10 +6,11 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
-import com.codecool.shop.service.ProductService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,6 +58,27 @@ public class ProductServiceTest {
         assertNull(productService.getProductCategory(1));
     }
 
+    @Test
+    void getProductsForCategory_ProductCategoryIsExists_returnTrue() {
+        ProductCategory toy = new ProductCategory("Toy", "Toy maker", "Toys for kids and adults only");
+        Supplier supplier = new Supplier("SouthPark Toys Inc.", "Creator of the best seller toys");
+        Product product1 = new Product("STOP touching me ELMO", 29.97f, "USD", "Elmo says inappropriate catchphrases, the doll also has a toothpaste dispenser", toy, supplier);
+        Product product2 = new Product("Alabama Man", 15.99f, "USD", "He is quick, strong, and active. He can bowl, chew tobacco, and drink alcohol. His action button can be used to hit his wife, a figure sold separately..", toy, supplier);
+        when(productCategoryDao.find(1)).thenReturn(toy);
+        when(productDao.getBy(toy)).thenReturn(List.of(product1, product2));
+        assertEquals(List.of(product1, product2), productService.getProductsForCategory(1));
+    }
 
+    @Test
+    void getProductsForCategory_ProductCategoryIsNotExists_returnTrue() {
+        when(productCategoryDao.find(1)).thenReturn(null);
+        assertEquals(List.of(), productService.getProductsForCategory(1));
+    }
 
+    @Test
+    void getProductsForCategory_NoProductsInThatCategory_returnTrue() {
+        ProductCategory toy = new ProductCategory("Toy", "Toy maker", "Toys for kids and adults only");
+        when(productCategoryDao.find(1)).thenReturn(toy);
+        assertEquals(List.of(), productService.getProductsForCategory(1));
+    }
 }
