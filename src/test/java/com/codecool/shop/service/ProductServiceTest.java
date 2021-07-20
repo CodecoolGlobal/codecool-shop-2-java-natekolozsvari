@@ -81,4 +81,19 @@ public class ProductServiceTest {
         when(productCategoryDao.find(1)).thenReturn(toy);
         assertEquals(List.of(), productService.getProductsForCategory(1));
     }
+
+    @Test
+    void getAllProductsCategory_ThereAreMoreProductCategory_returnTrue() {
+        ProductCategory toy = new ProductCategory("Toy", "Toy maker", "Toys for kids and adults only");
+        ProductCategory vehicle = new ProductCategory("Vehicle", "Vehicle", "A vehicle that can get you from A to B (or not)");
+        ProductCategory music = new ProductCategory("Music", "Pan flute/Christian rock", "Music for the whole family (if they are christians)");
+        when(productCategoryDao.getAll()).thenReturn(List.of(toy, vehicle, music));
+        assertEquals(List.of(toy, vehicle, music), productService.getAllProductsCategory());
+    }
+
+    @Test
+    void getAllProductsCategory_NoProductCategory_returnTrue() {
+        when(productCategoryDao.getAll()).thenReturn(List.of());
+        assertEquals(List.of(), productService.getAllProductsCategory());
+    }
 }
