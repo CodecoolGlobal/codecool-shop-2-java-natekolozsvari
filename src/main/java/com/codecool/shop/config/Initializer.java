@@ -2,6 +2,7 @@ package com.codecool.shop.config;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.ShopDatabaseManager;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
@@ -13,12 +14,23 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.IOException;
+import java.sql.SQLException;
 
 @WebListener
 public class Initializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        ShopDatabaseManager dbManager = ShopDatabaseManager.getInstance();
+        try {
+            dbManager.setup();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
@@ -26,6 +38,7 @@ public class Initializer implements ServletContextListener {
         //setting up a new supplier
         Supplier garrison = new Supplier("Garrison Corp.", "Mr. Garrison's Corporation supplier of futuristic vehicles");
         supplierDataStore.add(garrison);
+//        dbManager.addSupplier(garrison);
         Supplier wacky = new Supplier("Wacky Co.", "Supplier of the wild wacky action bike");
         supplierDataStore.add(wacky);
         Supplier southpark = new Supplier("SouthPark Toys Inc.", "Creator of the best seller toys");

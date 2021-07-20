@@ -290,3 +290,11 @@ input[type=email]{
     border: 1px solid #ccc;
     border-radius: 3px;
 }
+
+.register {
+    border: none;
+    background-color: white;
+    font-size: 18px;
+    line-height: normal;
+    padding: 0;
+}

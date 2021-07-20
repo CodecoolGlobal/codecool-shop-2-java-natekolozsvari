@@ -119,21 +119,21 @@
 <div id="signUpModal" class="modal">
     <div class="modal-content">
         <h4 style="margin: 0 auto">Sign up</h4>
-        <form name="signUpForm" method="post">
+        <form name="signUpForm" id="signUpForm" method="post" action="/signup">
             <label for="name">Username</label>
-            <input type="text" id="name" name="name">
+            <input type="text" id="name" name="name" required />
             <label for="email">Email</label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" required />
             <label for="pw">Password</label>
-            <input type="password" id="pw" name="pw">
+            <input type="password" id="pw" name="pw" required />
         </form>
         <br>
         <span class="already-reg" style="color: grey; ">I already have an account</span>
 <br>
         <div>
         <span class="close">Close</span>
-        <span style="float: left;font-size: 16px;
-    font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Register</span></div>
+        <button type="submit" form="signUpForm" style="float: left;
+    font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Register</button></div>
         </div>
 </div>
 
