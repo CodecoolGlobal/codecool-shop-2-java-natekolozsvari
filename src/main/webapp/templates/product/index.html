@@ -93,7 +93,8 @@
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
 
-    <a class="login" href="#">Login</a>
+    <a id="signup-btn" class="login" href="#">Signup</a>
+    <a id="login-btn" class="login" href="#">Login</a>
 
         <a class="shopcart" href="#">
             <i class="fas fa-shopping-cart cart-button"></i>
@@ -113,6 +114,46 @@
     </div>
 
 
+</div>
+
+<div id="signUpModal" class="modal">
+    <div class="modal-content">
+        <h4 style="margin: 0 auto">Sign up</h4>
+        <form name="signUpForm" method="post">
+            <label for="name">Username</label>
+            <input type="text" id="name" name="name">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email">
+            <label for="pw">Password</label>
+            <input type="password" id="pw" name="pw">
+        </form>
+        <br>
+        <span class="already-reg" style="color: grey; ">I already have an account</span>
+<br>
+        <div>
+        <span class="close">Close</span>
+        <span style="float: left;font-size: 16px;
+    font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Register</span></div>
+        </div>
+</div>
+
+<div id="logInModal" class="modal">
+    <div class="modal-content">
+        <h4 style="margin: 0 auto">Log in</h4>
+        <form name="logInForm" method="post">
+            <label for="logInEmail">Email</label>
+            <input type="email" id="logInEmail" name="email">
+            <label for="logInPw">Password</label>
+            <input type="password" id="logInPw" name="pw">
+        </form>
+        <br>
+        <span class="no-acc" style="color: grey">I do not have an account</span>
+        <br>
+        <div>
+            <span class="close">Close</span>
+            <span style="float: left;font-size: 16px;
+    font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Log in</span></div>
+    </div>
 </div>
 
 <div id="main">
