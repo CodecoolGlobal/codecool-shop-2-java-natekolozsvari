@@ -112,5 +112,4 @@ public class ProductServiceTest {
         when(supplierDao.getAll()).thenReturn(List.of());
         assertEquals(List.of(), productService.getAllSuppliers());
     }
-
 }

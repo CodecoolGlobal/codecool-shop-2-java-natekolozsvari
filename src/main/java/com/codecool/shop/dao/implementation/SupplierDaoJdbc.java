@@ -2,6 +2,8 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -11,6 +13,7 @@ import java.util.List;
 public class SupplierDaoJdbc implements SupplierDao {
     private SupplierDao supplierDao;
     private DataSource dataSource;
+    private static final Logger logger = LoggerFactory.getLogger(SupplierDaoJdbc.class);
 
     public SupplierDaoJdbc(SupplierDao supplierDao, DataSource dataSource) {
         this.supplierDao = supplierDao;
@@ -28,8 +31,10 @@ public class SupplierDaoJdbc implements SupplierDao {
             ResultSet resultset = statement.getGeneratedKeys();
             resultset.next();
             supplier.setId(resultset.getInt(1));
+            logger.info("Successfully inserted supplier");
         }
         catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
     }
@@ -43,9 +48,11 @@ public class SupplierDaoJdbc implements SupplierDao {
             ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) return null;
             Supplier supplier = new Supplier(resultSet.getString(1), resultSet.getString(2));
+            logger.info("Successfully found supplier");
             return supplier;
         }
         catch (SQLException e ) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
     }
@@ -57,8 +64,10 @@ public class SupplierDaoJdbc implements SupplierDao {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             statement.executeQuery();
+            logger.info("Successfully removed supplier");
         }
         catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
 
@@ -73,10 +82,12 @@ public class SupplierDaoJdbc implements SupplierDao {
             while (resultSet.next()) {
                 Supplier supplier = new Supplier(resultSet.getString(1), resultSet.getString(2));
                 result.add(supplier);
+                logger.info("Successfully found all suppliers");
             }
             return result;
         }
         catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
     }
