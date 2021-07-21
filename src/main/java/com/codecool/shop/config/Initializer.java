@@ -24,9 +24,13 @@ public class Initializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ShopDatabaseManager dbManager = ShopDatabaseManager.getInstance();
+        ProductDao productDataStore = null;
+        ProductCategoryDao productCategoryDataStore = null;
+        SupplierDao supplierDataStore = null;
+        ShopDatabaseManager shopDatabaseManager = null;
+        Properties properties = new Properties();
         try {
-            dbManager.setup();
+            shopDatabaseManager.setup();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (IOException e) {
@@ -50,12 +54,10 @@ public class Initializer implements ServletContextListener {
             supplierDataStore = shopDatabaseManager.getSupplierDao();
             productDataStore.reset();
             productCategoryDataStore.reset();
-            supplierDataStore.reset();
+            supplierDataStore.reset();}
 
 
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+
 
         //setting up a new supplier
         Supplier garrison = new Supplier("Garrison Corp", "Mr. Garrison's Corporation supplier of futuristic vehicles");
