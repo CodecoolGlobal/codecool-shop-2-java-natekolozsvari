@@ -1,6 +1,12 @@
 package com.codecool.shop.dao;
 
+<<<<<<< HEAD
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.UserDaoJdbc;
+import com.codecool.shop.model.User;
+=======
 import com.codecool.shop.dao.implementation.ProductDaoJdbc;
+>>>>>>> development
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
@@ -17,11 +23,37 @@ public class ShopDatabaseManager {
     private static final String DB_PASSWORD = "password";
     private ProductDaoJdbc productDao = null;
 
+    private UserDao userDao;
+    private static ShopDatabaseManager instance = null;
+
     private static Properties properties = null;
+
+    public static ShopDatabaseManager getInstance() {
+        if (instance == null) {
+            instance = new ShopDatabaseManager();
+        }
+        return instance;
+    }
 
     public void setup() throws SQLException, IOException {
         DataSource dataSource = connect();
-        productDao = new ProductDaoJdbc(dataSource);}
+        userDao = new UserDaoJdbc(dataSource);
+        productDao = new ProductDaoJdbc(dataSource);
+    }
+
+
+    public void addUser(User user) {
+        userDao.add(user);
+    }
+
+    public boolean doesNameExist(String name) {
+        return userDao.doesNameExist(name);
+    }
+
+    public boolean doesEmailExist(String email) {
+        return userDao.doesEmailExist(email);
+
+    }
 
     public ProductDaoJdbc getProductDao() {
         return productDao;
@@ -35,7 +67,10 @@ public class ShopDatabaseManager {
         String user = properties.getProperty(DB_USERNAME);
         String password = properties.getProperty(DB_PASSWORD);
         String url = properties.getProperty(DB_URL);
-
+        System.out.println(dbName);
+        System.out.println(user);
+        System.out.println(password);
+        System.out.println(url);
 
 
         dataSource.setDatabaseName(dbName);
