@@ -93,7 +93,8 @@
         <a id="login-btn" class="login" href="#">Login</a>
     </div>
     <div th:unless="${session.isEmpty()}">
-        <a id="logout-btn" class="login" href="#">Log Out</a>
+        <a id="logout-btn" class="login" href="/logout">Log Out</a>
+        <a id="logged-in-text" style="cursor: default; color: white" class="login" th:text="'Logged in as ' + ${session.user.getName()}">Username</a>
     </div>
         <a class="shopcart" href="#">
             <i class="fas fa-shopping-cart cart-button"></i>

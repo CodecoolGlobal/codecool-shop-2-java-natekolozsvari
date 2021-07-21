@@ -194,6 +194,10 @@ img {
     color: white;
 }
 
+#logged-in-text:hover {
+    background-color: #333;
+}
+
 .topnav a.login{
     float: right;
 }

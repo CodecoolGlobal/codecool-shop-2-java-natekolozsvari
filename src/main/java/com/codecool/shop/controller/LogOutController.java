@@ -19,16 +19,13 @@ import java.text.SimpleDateFormat;
 import java.sql.Date;
 
 
-@WebServlet(urlPatterns = {"/login"})
-public class LogInController extends HttpServlet {
+@WebServlet(urlPatterns = {"/logout"})
+public class LogOutController extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
-        HttpSession session = req.getSession();
-        User user = ShopDatabaseManager.getInstance().getUserByEmail(email);
-        session.setAttribute("user", user);
-        session.setAttribute("is", user.getId());
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session=req.getSession();
+        session.invalidate();
         resp.sendRedirect(req.getContextPath());
     }
 }

@@ -24,10 +24,9 @@ window.onload = () => {
     initButtons();
     initSideBar();
     // initCartEventListener();
+    cartHoverListener();
     initSignUpModal();
     initLogInModal();
-    cartHoverListener();
-    initLogButtons();
 }
 
 function initButtons() {
@@ -463,24 +462,3 @@ async function validateLogIn(event) {
 }
 
 
-
-// function initLogButtons() {
-//     let logOutButton = document.getElementById("logout-btn");
-//     let logInButton = document.getElementById("login-btn");
-//     let signUpButton = document.getElementById("signup-btn");
-//     let loggedIn = !document.getElementById('mv').value;
-//     console.log(document.getElementById('mv').value);
-//     console.log(!(document.getElementById('mv').value));
-//
-//
-//     if (!loggedIn) {
-//         logOutButton.style.display = "none";
-//         logInButton.style.display = "block";
-//         signUpButton.style.display = "block";
-//     } else {
-//         logOutButton.style.display = "block";
-//         logInButton.style.display = "none";
-//         signUpButton.style.display = "none";
-//
-//     }
-// }

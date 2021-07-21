@@ -149,6 +149,32 @@ public class UserDaoJdbc implements UserDao {
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
+
+
+
+    @Override
+    public User getUserByEmail(String email) {
+        try (Connection conn = dataSource.getConnection()) {
+            ResultSet rs;
+            String sql = "SELECT id, name, password, reg_date FROM users WHERE users.email = ?;";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, email);
+            rs = st.executeQuery();
+            rs.next();
+            int id = rs.getInt(1);
+            String name = rs.getString(2);
+            String password = rs.getString(3);
+            Date regDate = rs.getDate(4);
+            User user = new User(name, email, password);
+            user.setRegDate(regDate);
+            user.setId(id);
+            return user;
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
