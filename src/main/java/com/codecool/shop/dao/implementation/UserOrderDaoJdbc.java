@@ -12,7 +12,6 @@ import java.util.List;
 
 
 public class UserOrderDaoJdbc implements UserOrderDao {
-    private UserOrderDao userOrderDao;
     private DataSource dataSource;
     private  static final Logger logger = LoggerFactory.getLogger(UserOrderDaoJdbc.class);
 
@@ -22,13 +21,25 @@ public class UserOrderDaoJdbc implements UserOrderDao {
 
     @Override
     public void setPaymentData(String cName, String cNum, String expDate, String cvv) {
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "INSERT INTO billingInfo (card_name, card_number, expiration_date, cvv) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, cName);
+            statement.setString(2, cNum);
+            statement.setString(3, expDate);
+            statement.setString(4, cvv);
 
+        }
+        catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void add(UserOrder userOrder) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "INSERT INTO billingInfo (user_id, name, email, phonenumber, country, adress, city, zip_code, card_name, card_number, expiration_date, cvv) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+            String sql = "INSERT INTO billingInfo (user_id, name, email, phonenumber, country, adress, city, zip_code) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
             String getUserId = "SELECT id FROM users WHERE name = ?";
             PreparedStatement st = connection.prepareStatement(getUserId);
@@ -46,10 +57,7 @@ public class UserOrderDaoJdbc implements UserOrderDao {
             statement.setString(6, userOrder.getAddress());
             statement.setString(7, userOrder.getCity());
             statement.setString(8, userOrder.getZip());
-            statement.setString(9, userOrder.getcName());
-            statement.setString(10, userOrder.getcNum());
-            statement.setString(11, userOrder.getExpDate());
-            statement.setString(12, userOrder.getCvv());
+
 
             ResultSet resultset = statement.getGeneratedKeys();
             resultset.next();
