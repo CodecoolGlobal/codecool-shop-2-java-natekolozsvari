@@ -398,6 +398,9 @@ function initLogInModal() {
 
 // Get the button that opens the modal
     var btn = document.getElementById("login-btn");
+    if(sessionStorage.getItem('loggedin') === 'true') {
+        btn.style.display = 'none';
+    }
 
 // Get the <span> element that closes the modal
     var span = modal.getElementsByClassName("close")[0];
