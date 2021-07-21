@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.UserOrderDao;
+import com.codecool.shop.model.Supplier;
 import com.codecool.shop.service.UserOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +16,7 @@ public class UserOrderDaoJdbc implements UserOrderDao {
     private DataSource dataSource;
     private  static final Logger logger = LoggerFactory.getLogger(UserOrderDaoJdbc.class);
 
-    public UserOrderDaoJdbc(UserOrderDao userOrderDao, DataSource dataSource) {
-        this.userOrderDao = userOrderDao;
+    public UserOrderDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -34,6 +34,7 @@ public class UserOrderDaoJdbc implements UserOrderDao {
             PreparedStatement st = connection.prepareStatement(getUserId);
             st.setString(1, userOrder.getcName());
             ResultSet rs = st.executeQuery();
+            rs.next();
             int userId = rs.getInt(1);
 
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -62,7 +63,20 @@ public class UserOrderDaoJdbc implements UserOrderDao {
 
     @Override
     public UserOrder find(int id) {
-        return null;
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "SELECT name, email, phonenumber, country, dress, city zip_code FROM billingInfo WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) return null;
+            UserOrder userOrder = new UserOrder(id, resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7));
+            logger.info("Successfully found supplier");
+            return userOrder;
+        }
+        catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
