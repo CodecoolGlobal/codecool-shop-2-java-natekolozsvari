@@ -44,9 +44,7 @@ public class ShopDatabaseManager {
         supplierDao = new SupplierDaoJdbc(dataSource);
         categoryDao = new ProductCategoryDaoJdbc(dataSource);
         userDao = new UserDaoJdbc(dataSource);
-        
     }
-
 
     public void addUser(User user) {
         userDao.add(user);

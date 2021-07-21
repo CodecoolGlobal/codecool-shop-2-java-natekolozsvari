@@ -23,10 +23,10 @@ window.onload = () => {
 
     initButtons();
     initSideBar();
-    // initCartEventListener();
     cartHoverListener();
     initSignUpModal();
     initLogInModal();
+
     // initLogOut();
 }
 
@@ -229,12 +229,10 @@ function showCartItems(items) {
 
         minusBtns.forEach(button =>{
             button.onclick = function(){
-                console.log(button.dataset.itemname)
                 inputFields.forEach(inputF =>{
                     if(inputF.dataset.itemname === button.dataset.itemname && parseInt(inputF.textContent) > 0){
                         let cartSize = document.querySelector(".cart-size");
                         let productName = button.dataset.itemname;
-                        console.log(productName)
                         let del = "del";
                         let fetchParam = `?name=${productName}&mod=${del}`;
                         updateCart(fetchParam, showCartItems);
@@ -323,18 +321,20 @@ function initSignUpModal() {
     var span = modal.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
-    btn.onclick = function () {
-        let modals = document.getElementsByClassName("modal");
+    if(btn) {
+        btn.onclick = function () {
+            let modals = document.getElementsByClassName("modal");
 
-        Array.from(modals).forEach(function(m) {
-            if (m !== modal && m.style.display === "block"){
-                m.style.display = "none";
+            Array.from(modals).forEach(function (m) {
+                if (m !== modal && m.style.display === "block") {
+                    m.style.display = "none";
+                }
+            })
+            if (modal.style.display === "block") {
+                modal.style.display = "none";
+            } else {
+                modal.style.display = "block";
             }
-        })
-        if (modal.style.display === "block") {
-            modal.style.display = "none";
-        } else {
-            modal.style.display = "block";
         }
     }
 
@@ -407,18 +407,20 @@ function initLogInModal() {
     var span = modal.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
-    btn.onclick = function () {
-        let modals = document.getElementsByClassName("modal");
+    if(btn) {
+        btn.onclick = function () {
+            let modals = document.getElementsByClassName("modal");
 
-        Array.from(modals).forEach(function(m) {
-            if (m !== modal && m.style.display === "block"){
-                m.style.display = "none";
+            Array.from(modals).forEach(function (m) {
+                if (m !== modal && m.style.display === "block") {
+                    m.style.display = "none";
+                }
+            })
+            if (modal.style.display === "block") {
+                modal.style.display = "none";
+            } else {
+                modal.style.display = "block";
             }
-        })
-        if (modal.style.display === "block") {
-            modal.style.display = "none";
-        } else {
-            modal.style.display = "block";
         }
     }
 
