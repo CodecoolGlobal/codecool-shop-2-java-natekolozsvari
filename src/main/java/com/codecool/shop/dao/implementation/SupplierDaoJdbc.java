@@ -99,8 +99,8 @@ public class SupplierDaoJdbc implements SupplierDao {
             while (resultSet.next()) {
                 Supplier supplier = new Supplier(resultSet.getString(1), resultSet.getString(2));
                 result.add(supplier);
-                logger.info("Successfully found all suppliers");
             }
+            logger.info("Successfully found all suppliers");
             return result;
         }
         catch (SQLException e) {

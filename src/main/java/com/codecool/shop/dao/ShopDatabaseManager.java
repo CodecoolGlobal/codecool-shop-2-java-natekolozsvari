@@ -1,7 +1,11 @@
 package com.codecool.shop.dao;
 
+
 import com.codecool.shop.dao.implementation.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.UserDaoJdbc;
+import com.codecool.shop.model.User;
 import com.codecool.shop.dao.implementation.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.SupplierDaoJdbc;
 import org.postgresql.ds.PGSimpleDataSource;
@@ -22,13 +26,45 @@ public class ShopDatabaseManager {
     private SupplierDaoJdbc supplierDao = null;
     private ProductCategoryDaoJdbc categoryDao = null;
 
+    private UserDao userDao;
+    private static ShopDatabaseManager instance = null;
+
     private static Properties properties = null;
+
+    public static ShopDatabaseManager getInstance() {
+        if (instance == null) {
+            instance = new ShopDatabaseManager();
+        }
+        return instance;
+    }
 
     public void setup() throws SQLException, IOException {
         DataSource dataSource = connect();
         productDao = new ProductDaoJdbc(dataSource);
         supplierDao = new SupplierDaoJdbc(dataSource);
         categoryDao = new ProductCategoryDaoJdbc(dataSource);
+        userDao = new UserDaoJdbc(dataSource);
+        
+    }
+
+
+    public void addUser(User user) {
+        userDao.add(user);
+    }
+
+    public boolean doesNameExist(String name) {
+        return userDao.doesNameExist(name);
+    }
+
+    public boolean doesEmailExist(String email) {
+        return userDao.doesEmailExist(email);
+    }
+
+    public String getPasswordForEmail(String email) {
+        return userDao.getPasswordForEmail(email);    }
+
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
     }
 
     public ProductDaoJdbc getProductDao() {
@@ -51,7 +87,10 @@ public class ShopDatabaseManager {
         String user = properties.getProperty(DB_USERNAME);
         String password = properties.getProperty(DB_PASSWORD);
         String url = properties.getProperty(DB_URL);
-
+        System.out.println(dbName);
+        System.out.println(user);
+        System.out.println(password);
+        System.out.println(url);
 
 
         dataSource.setDatabaseName(dbName);

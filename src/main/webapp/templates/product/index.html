@@ -40,16 +40,10 @@
 </head>
 
 <header>
-
-
-
-
-
-
 </header>
 <body>
 
-
+<input id='mv' type='hidden' th:value='${session.isEmpty()}'/>
 
 <div id="mySidenav" class="sidenav">
     <h1 style="text-align: center; color: white; font-size: 48px;">Filter by</h1>
@@ -93,10 +87,15 @@
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
 
-    <a id="signup-btn" class="login" href="#">Signup</a>
-    <a id="login-btn" class="login" href="#">Login</a>
-    <a id="logout-btn" class="login" href="#">Log Out</a>
 
+    <div th:if="${session.isEmpty()}">
+        <a id="signup-btn" class="login" href="#">Signup</a>
+        <a id="login-btn" class="login" href="#">Login</a>
+    </div>
+    <div th:unless="${session.isEmpty()}">
+        <a id="logout-btn" class="login" href="/logout">Log Out</a>
+        <a id="logged-in-text" style="cursor: default; color: white" class="login" th:text="'Logged in as ' + ${session.user.getName()}">Username</a>
+    </div>
         <a class="shopcart" href="#">
             <i class="fas fa-shopping-cart cart-button"></i>
             <i class="cart-size" th:data-value="${cartSize}"></i>
@@ -119,41 +118,51 @@
 
 <div id="signUpModal" class="modal">
     <div class="modal-content">
-        <h4 style="margin: 0 auto">Sign up</h4>
-        <form name="signUpForm" method="post">
-            <label for="name">Username</label>
-            <input type="text" id="name" name="name">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email">
+        <h4 style="margin: 0 auto; padding-bottom: 10px">Sign up</h4>
+        <form name="signUpForm" id="signUpForm" method="post" action="/signup">
+            <div>
+                <label for="name" style="display: inline-block">Username</label>
+                <p id="signup-name-invalid" style="color: red; font-size: 12px; float: right; display: none; padding-top: 3px">This username is already taken!</p>
+            </div>
+            <input type="text" id="name" name="name" required />
+            <div>
+                <label for="email" style="display: inline-block">Email</label>
+                <p id="signup-email-invalid" style="color: red; font-size: 12px; float: right; display: none; padding-top: 3px">This email is already taken!</p>
+            </div>
+            <input type="email" id="email" name="email" required />
             <label for="pw">Password</label>
-            <input type="password" id="pw" name="pw">
+            <input type="password" id="pw" name="pw" required />
         </form>
         <br>
         <span class="already-reg" style="color: grey; ">I already have an account</span>
 <br>
         <div>
         <span class="close">Close</span>
-        <span style="float: left;font-size: 16px;
-    font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Register</span></div>
+        <button type="submit" form="signUpForm" style="float: left;
+    font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Register</button></div>
         </div>
 </div>
 
+
 <div id="logInModal" class="modal">
     <div class="modal-content">
-        <h4 style="margin: 0 auto">Log in</h4>
-        <form name="logInForm" method="post">
+        <h4 style="margin: 0 auto; padding-bottom: 10px">Log in</h4>
+        <form name="logInForm" id="logInForm" method="post" action="/login">
             <label for="logInEmail">Email</label>
+
             <input type="email" id="logInEmail" name="email">
             <label for="logInPw">Password</label>
             <input type="password" id="logInPw" name="pw">
         </form>
-        <br>
+        <div>
+        <p id="login-invalid" style="color: red; font-size: 12px; float: right; display: none">Wrong email or password!</p>
+        </div>
         <span class="no-acc" style="color: grey">I do not have an account</span>
         <br>
         <div>
             <span class="close">Close</span>
-            <span style="float: left;font-size: 16px;
-    font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Log in</span></div>
+            <button type="submit" form="logInForm" style="float: left;
+            font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Log in</button></div>
     </div>
 </div>
 

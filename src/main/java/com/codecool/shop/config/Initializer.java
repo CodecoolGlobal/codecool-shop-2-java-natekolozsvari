@@ -14,9 +14,9 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.io.FileInputStream;
 import java.util.Properties;
 
 @WebListener
@@ -24,13 +24,11 @@ public class Initializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ProductDao productDataStore = null;
-        ProductCategoryDao productCategoryDataStore = null;
-        SupplierDao supplierDataStore = null;
-        ShopDatabaseManager shopDatabaseManager = null;
-        Properties properties = new Properties();
+        ShopDatabaseManager dbManager = ShopDatabaseManager.getInstance();
         try {
-            properties.load(new FileInputStream("src/main/resources/connection.properties"));
+            dbManager.setup();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,7 +53,9 @@ public class Initializer implements ServletContextListener {
             supplierDataStore.reset();
 
 
-        }
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         //setting up a new supplier
         Supplier garrison = new Supplier("Garrison Corp", "Mr. Garrison's Corporation supplier of futuristic vehicles");

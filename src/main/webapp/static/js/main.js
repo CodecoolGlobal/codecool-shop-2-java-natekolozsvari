@@ -24,10 +24,9 @@ window.onload = () => {
     initButtons();
     initSideBar();
     // initCartEventListener();
+    cartHoverListener();
     initSignUpModal();
     initLogInModal();
-    cartHoverListener();
-    initLogOut();
 }
 
 function initButtons() {
@@ -213,7 +212,6 @@ function showCartItems(items) {
         let modal = document.getElementById("myModal");
         let checkout = document.querySelector(".checkout");
         let minusBtns = document.querySelectorAll("#minusBtn");
-        console.log(minusBtns)
         let plusBtns = document.querySelectorAll("#plusBtn");
         let inputFields = document.querySelectorAll(".amountOfItem");
         let emptyCart = document.querySelector(".empty_cart");
@@ -353,8 +351,43 @@ function initSignUpModal() {
 
 // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
-        if (event.target == modal) {
+        if (event.target === modal) {
             modal.style.display = "none";
+        }
+    }
+
+    let form = document.getElementById('signUpForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        validateSignUp(event);
+
+    })
+
+}
+
+async function validateSignUp(event) {
+    let form = document.getElementById('signUpForm');
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let fetchParam = `?name=${name}&email=${email}`
+    let obj = await fetch(`/signup/validate${fetchParam}`)
+        .then(response => response.json())
+        .catch(error => console.log(error));
+    let valid = !(obj['name'] === true || obj['email'] === true);
+    if(valid) {
+        form.submit();
+    } else {
+        if(obj['name'] === true){
+            document.getElementById('signup-name-invalid').style.display = 'inline-block';
+        } else {
+            document.getElementById('signup-name-invalid').style.display = 'none';
+        }
+        if(obj['email'] === true){
+            document.getElementById('signup-email-invalid').style.display = 'inline-block';
+        } else {
+            document.getElementById('signup-email-invalid').style.display = 'none';
         }
     }
 }
@@ -365,6 +398,9 @@ function initLogInModal() {
 
 // Get the button that opens the modal
     var btn = document.getElementById("login-btn");
+    if(sessionStorage.getItem('loggedin') === 'true') {
+        btn.style.display = 'none';
+    }
 
 // Get the <span> element that closes the modal
     var span = modal.getElementsByClassName("close")[0];
@@ -403,11 +439,29 @@ function initLogInModal() {
             modal.style.display = "none";
         }
     }
+
+    let form = document.getElementById('logInForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        validateLogIn(event);
+    })
 }
 
-function initLogOut() {
-    let logOutButton = document.getElementById("logout-btn")
-    if (sessionStorage.getItem("loggedin") !== "false") {
-        logOutButton.style.display = "none";
+async function validateLogIn(event) {
+    let form = document.getElementById('logInForm');
+
+    let email = document.getElementById("logInEmail").value;
+    let pw = document.getElementById("logInPw").value;
+    let fetchParam = `?email=${email}&pw=${pw}`
+    let obj = await fetch(`/login/validate${fetchParam}`)
+        .then(response => response.json())
+        .catch(error => console.log(error));
+    let valid = obj['valid'];
+    if(valid) {
+        form.submit();
+    } else {
+        document.getElementById('login-invalid').style.display = 'block';
     }
 }
+
+
