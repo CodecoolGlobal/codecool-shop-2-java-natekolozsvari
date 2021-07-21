@@ -32,20 +32,39 @@ public class Initializer implements ServletContextListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        String dataManagerType = properties.getProperty("dao");
+        System.out.println(dataManagerType);
+        if(dataManagerType.equals("mem")){
+        productDataStore = ProductDaoMem.getInstance();
+        productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        supplierDataStore = SupplierDaoMem.getInstance();}
+        else if(dataManagerType.equals("jdbc")){
+            shopDatabaseManager = new ShopDatabaseManager();
+            try {
+                shopDatabaseManager.setup();
+            } catch (SQLException | IOException throwables) {
+                throwables.printStackTrace();
+            }
+            productDataStore = shopDatabaseManager.getProductDao();
+            productCategoryDataStore = shopDatabaseManager.getCategoryDao();
+            supplierDataStore = shopDatabaseManager.getSupplierDao();
+            productDataStore.reset();
+            productCategoryDataStore.reset();
+            supplierDataStore.reset();
+
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         //setting up a new supplier
-        Supplier garrison = new Supplier("Garrison Corp.", "Mr. Garrison's Corporation supplier of futuristic vehicles");
+        Supplier garrison = new Supplier("Garrison Corp", "Mr. Garrison's Corporation supplier of futuristic vehicles");
         supplierDataStore.add(garrison);
-//        dbManager.addSupplier(garrison);
-        Supplier wacky = new Supplier("Wacky Co.", "Supplier of the wild wacky action bike");
+        Supplier wacky = new Supplier("Wacky Co", "Supplier of the wild wacky action bike");
         supplierDataStore.add(wacky);
-        Supplier southpark = new Supplier("SouthPark Toys Inc.", "Creator of the best seller toys");
+        Supplier southpark = new Supplier("SouthPark Toys Inc", "Creator of the best seller toys");
         supplierDataStore.add(southpark);
-        Supplier cartman = new Supplier("Cartman Ltd.", "Maker of top hit songs in USA");
+        Supplier cartman = new Supplier("Cartman Ltd", "Maker of top hit songs in USA");
         supplierDataStore.add(cartman);
 
 

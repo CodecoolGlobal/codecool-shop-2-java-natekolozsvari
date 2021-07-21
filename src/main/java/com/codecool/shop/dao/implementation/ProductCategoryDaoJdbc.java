@@ -19,6 +19,25 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         this.dataSource = dataSource;
     }
 
+    public void reset(){
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "DROP TABLE IF EXISTS productCategories;\n" +
+                    "CREATE TABLE productCategories (\n" +
+                    "    id serial NOT NULL PRIMARY KEY,\n" +
+                    "    name text NOT NULL,\n" +
+                    "    description text NOT NULL,\n" +
+                    "    department text NOT NULL\n" +
+                    ");";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+            connection.close();
+            logger.info("Successfully reset productcategories");
+        }
+        catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public void add(ProductCategory category) {
 
@@ -48,11 +67,13 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             rs = st.executeQuery();
+            if (!rs.next()) return null;
             String name = rs.getString(1);
             String description = rs.getString(2);
             String department = rs.getString(3);
             ProductCategory productCategory = new ProductCategory(name, description, department);
             productCategory.setId(id);
+
             logger.info("Successfully found product category");
             return productCategory;
         }

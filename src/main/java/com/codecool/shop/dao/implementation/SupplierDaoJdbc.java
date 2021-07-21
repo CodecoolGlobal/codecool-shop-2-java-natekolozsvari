@@ -11,13 +11,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDaoJdbc implements SupplierDao {
-    private SupplierDao supplierDao;
     private DataSource dataSource;
     private static final Logger logger = LoggerFactory.getLogger(SupplierDaoJdbc.class);
 
-    public SupplierDaoJdbc(SupplierDao supplierDao, DataSource dataSource) {
-        this.supplierDao = supplierDao;
+    public SupplierDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public void reset(){
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "DROP TABLE IF EXISTS suppliers;\n" +
+                    "CREATE TABLE suppliers(\n" +
+                    "    id serial NOT NULL PRIMARY KEY,\n" +
+                    "    name text NOT NULL,\n" +
+                    "    description text NOT NULL\n" +
+                    ");";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+            connection.close();
+            logger.info("Successfully reset supplier");
+        }
+        catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -60,7 +77,7 @@ public class SupplierDaoJdbc implements SupplierDao {
     @Override
     public void remove(int id) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "DELETE FROM supplier WHERE id = ?";
+            String sql = "DELETE FROM suppliers WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             statement.executeQuery();

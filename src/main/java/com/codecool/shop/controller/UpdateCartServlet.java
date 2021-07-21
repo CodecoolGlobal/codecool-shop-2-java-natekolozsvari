@@ -1,12 +1,11 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.OrderDao;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -25,10 +24,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 
 
 @WebServlet(urlPatterns = {"/updateCart"})
@@ -43,7 +45,30 @@ public class UpdateCartServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         OrderDao orderDataStore = OrderDaoMem.getInstance();
-        ProductDao productDao = ProductDaoMem.getInstance();
+        ProductDao productDataStore = null;
+        ShopDatabaseManager shopDatabaseManager = null;
+
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("src/main/resources/connection.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String dataManagerType = properties.getProperty("dao");
+        System.out.println(dataManagerType);
+        if(dataManagerType.equals("mem")){
+            productDataStore = ProductDaoMem.getInstance();}
+        else if(dataManagerType.equals("jdbc")){
+            shopDatabaseManager = new ShopDatabaseManager();
+            try {
+                shopDatabaseManager.setup();
+            } catch (SQLException | IOException throwables) {
+                throwables.printStackTrace();
+            }
+            productDataStore = shopDatabaseManager.getProductDao();
+
+
+        }
 
         String productName = request.getParameter("name");
 
@@ -56,7 +81,7 @@ public class UpdateCartServlet extends HttpServlet {
 
         else {
             String modifier = request.getParameter("mod");
-            Product newProduct = productDao.getByName(productName);
+            Product newProduct = productDataStore.getByName(productName);
             if (productName != null) {
                 boolean inOrder = false;
                 for (Product product : orderDataStore.getAll().keySet()) {

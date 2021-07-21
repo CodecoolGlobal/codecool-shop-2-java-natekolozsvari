@@ -1,13 +1,10 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.OrderDao;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.service.OrderService;
-import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 
 import com.codecool.shop.service.ProductService;
@@ -20,22 +17,52 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+        ProductDao productDataStore = null;
+        ProductCategoryDao productCategoryDataStore = null;
+        SupplierDao supplierDataStore = null;
+        ShopDatabaseManager shopDatabaseManager = null;
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("src/main/resources/connection.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String dataManagerType = properties.getProperty("dao");
+        System.out.println(dataManagerType);
+        if(dataManagerType.equals("mem")){
+            productDataStore = ProductDaoMem.getInstance();
+            productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+            supplierDataStore = SupplierDaoMem.getInstance();}
+        else if(dataManagerType.equals("jdbc")){
+            shopDatabaseManager = new ShopDatabaseManager();
+            try {
+                shopDatabaseManager.setup();
+            } catch (SQLException | IOException throwables) {
+                throwables.printStackTrace();
+            }
+            productDataStore = shopDatabaseManager.getProductDao();
+            productCategoryDataStore = shopDatabaseManager.getCategoryDao();
+            supplierDataStore = shopDatabaseManager.getSupplierDao();
+
+        }
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDataStore);
 
         OrderDao orderDataStore = OrderDaoMem.getInstance();
         OrderService orderService = new OrderService(orderDataStore);
+
+
 
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
