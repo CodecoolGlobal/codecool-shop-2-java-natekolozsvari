@@ -79,4 +79,8 @@ public class UserOrder {
     public String getCvv() {
         return cvv;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
