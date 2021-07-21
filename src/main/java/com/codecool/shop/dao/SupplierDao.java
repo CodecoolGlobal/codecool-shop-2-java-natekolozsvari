@@ -9,6 +9,6 @@ public interface SupplierDao {
     void add(Supplier supplier);
     Supplier find(int id);
     void remove(int id);
-
+    void reset();
     List<Supplier> getAll();
 }

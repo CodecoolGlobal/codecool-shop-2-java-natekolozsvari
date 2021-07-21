@@ -65,7 +65,7 @@ public class ProductServiceTest {
         Product product1 = new Product("STOP touching me ELMO", 29.97f, "USD", "Elmo says inappropriate catchphrases, the doll also has a toothpaste dispenser", toy, supplier);
         Product product2 = new Product("Alabama Man", 15.99f, "USD", "He is quick, strong, and active. He can bowl, chew tobacco, and drink alcohol. His action button can be used to hit his wife, a figure sold separately..", toy, supplier);
         when(productCategoryDao.find(1)).thenReturn(toy);
-        when(productDao.getBy(toy)).thenReturn(List.of(product1, product2));
+        when(productDao.getByCategory(toy)).thenReturn(List.of(product1, product2));
         assertEquals(List.of(product1, product2), productService.getProductsForCategory(1));
     }
 

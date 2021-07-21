@@ -1,6 +1,9 @@
 package com.codecool.shop.dao;
 
+import com.codecool.shop.dao.implementation.ProductCategoryDaoJdbc;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoJdbc;
+import com.codecool.shop.dao.implementation.SupplierDaoJdbc;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
@@ -16,15 +19,28 @@ public class ShopDatabaseManager {
     private static final String DB_USERNAME = "user";
     private static final String DB_PASSWORD = "password";
     private ProductDaoJdbc productDao = null;
+    private SupplierDaoJdbc supplierDao = null;
+    private ProductCategoryDaoJdbc categoryDao = null;
 
     private static Properties properties = null;
 
     public void setup() throws SQLException, IOException {
         DataSource dataSource = connect();
-        productDao = new ProductDaoJdbc(dataSource);}
+        productDao = new ProductDaoJdbc(dataSource);
+        supplierDao = new SupplierDaoJdbc(dataSource);
+        categoryDao = new ProductCategoryDaoJdbc(dataSource);
+    }
 
     public ProductDaoJdbc getProductDao() {
         return productDao;
+    }
+
+    public SupplierDaoJdbc getSupplierDao() {
+        return supplierDao;
+    }
+
+    public ProductCategoryDaoJdbc getCategoryDao() {
+        return categoryDao;
     }
 
     private DataSource connect() throws SQLException, IOException {

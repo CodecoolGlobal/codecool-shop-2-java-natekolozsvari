@@ -3,7 +3,7 @@ CREATE TABLE products (
     id serial NOT NULL PRIMARY KEY,
     name text NOT NULL,
     description text NOT NULL ,
-    defaultPrice money NOT NULL,
+    defaultPrice float NOT NULL,
     defaultCurrency text NOT NULL,
     productCategory_id integer NOT NULL,
     supplier_id integer NOT NULL

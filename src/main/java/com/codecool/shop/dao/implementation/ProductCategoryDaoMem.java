@@ -41,6 +41,11 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
     }
 
     @Override
+    public void reset() {
+
+    }
+
+    @Override
     public List<ProductCategory> getAll() {
         return data;
     }

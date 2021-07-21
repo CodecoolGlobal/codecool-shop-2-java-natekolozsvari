@@ -44,25 +44,27 @@ public class Initializer implements ServletContextListener {
             shopDatabaseManager = new ShopDatabaseManager();
             try {
                 shopDatabaseManager.setup();
-            } catch (SQLException throwables) {
+            } catch (SQLException | IOException throwables) {
                 throwables.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
             productDataStore = shopDatabaseManager.getProductDao();
-            productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-            supplierDataStore = SupplierDaoMem.getInstance();
+            productCategoryDataStore = shopDatabaseManager.getCategoryDao();
+            supplierDataStore = shopDatabaseManager.getSupplierDao();
+            productDataStore.reset();
+            productCategoryDataStore.reset();
+            supplierDataStore.reset();
+
 
         }
 
         //setting up a new supplier
-        Supplier garrison = new Supplier("Garrison Corp.", "Mr. Garrison's Corporation supplier of futuristic vehicles");
+        Supplier garrison = new Supplier("Garrison Corp", "Mr. Garrison's Corporation supplier of futuristic vehicles");
         supplierDataStore.add(garrison);
-        Supplier wacky = new Supplier("Wacky Co.", "Supplier of the wild wacky action bike");
+        Supplier wacky = new Supplier("Wacky Co", "Supplier of the wild wacky action bike");
         supplierDataStore.add(wacky);
-        Supplier southpark = new Supplier("SouthPark Toys Inc.", "Creator of the best seller toys");
+        Supplier southpark = new Supplier("SouthPark Toys Inc", "Creator of the best seller toys");
         supplierDataStore.add(southpark);
-        Supplier cartman = new Supplier("Cartman Ltd.", "Maker of top hit songs in USA");
+        Supplier cartman = new Supplier("Cartman Ltd", "Maker of top hit songs in USA");
         supplierDataStore.add(cartman);
 
 
