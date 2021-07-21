@@ -400,6 +400,9 @@ function initLogInModal() {
 
 // Get the button that opens the modal
     var btn = document.getElementById("login-btn");
+    if(sessionStorage.getItem('loggedin') === 'true') {
+        btn.style.display = 'none';
+    }
 
 // Get the <span> element that closes the modal
     var span = modal.getElementsByClassName("close")[0];
@@ -442,7 +445,13 @@ function initLogInModal() {
 
 function initLogOut() {
     let logOutButton = document.getElementById("logout-btn")
-    if (sessionStorage.getItem("loggedIn") !== "true") {
+    if (sessionStorage.getItem("loggedin") !== "true") {
         logOutButton.style.display = "none";
     }
+    logOutButton.addEventListener('click', function () {
+        sessionStorage.setItem('loggedin', "false");
+        logOutButton.style.display = "none";
+        let btn = document.getElementById("login-btn");
+        btn.style.display = 'block';
+    })
 }
