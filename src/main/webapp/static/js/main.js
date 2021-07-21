@@ -27,6 +27,7 @@ window.onload = () => {
     cartHoverListener();
     initSignUpModal();
     initLogInModal();
+    initLogOut();
 }
 
 function initButtons() {
@@ -462,6 +463,19 @@ async function validateLogIn(event) {
     } else {
         document.getElementById('login-invalid').style.display = 'block';
     }
+}
+
+function initLogOut() {
+    let logOutButton = document.getElementById("logout-btn")
+    if (sessionStorage.getItem("loggedin") !== "true") {
+        logOutButton.style.display = "none";
+    }
+    logOutButton.addEventListener('click', function () {
+        sessionStorage.setItem('loggedin', "false");
+        logOutButton.style.display = "none";
+        let btn = document.getElementById("login-btn");
+        btn.style.display = 'block';
+    })
 }
 
 
