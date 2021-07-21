@@ -104,11 +104,16 @@ public class UserDaoJdbc implements UserDao {
     public boolean doesNameExist(String name) {
         try (Connection conn = dataSource.getConnection()) {
             ResultSet rs;
-            String sql = "SELECT id FROM users WHERE users.name = ?;";
+            String sql = "SELECT COUNT(id) AS c FROM users WHERE users.name LIKE ?;";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, name);
+
             rs = st.executeQuery();
-            return rs.next();
+            rs.next();
+            int count = rs.getInt("c");
+            rs.close();
+            System.out.println(count);
+            return count > 0;
         }
         catch (SQLException e) {
             throw new RuntimeException(e);

@@ -357,7 +357,29 @@ function initSignUpModal() {
         }
     }
 
+    let form = document.getElementById('signUpForm');
+    form.addEventListener('submit', event => {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let fetchParam = `?name=${name}&email=${email}`
+        let valid = validateSignUp(fetchParam);
+        if(!valid) {
+            event.preventDefault();
+            console.log('prevented');
+        } else {
+            console.log('submitted');
+        }
+    })
 
+}
+
+async function validateSignUp(fetchParam) {
+    let obj = await fetch(`/validate${fetchParam}`)
+        .then(response => response.json())
+        .catch(error => console.log(error));
+    console.log(obj);
+    console.log(!(obj[name] === true || obj[email] === true))
+    return !(obj[name] === true || obj[email] === true);
 }
 
 function initLogInModal() {
