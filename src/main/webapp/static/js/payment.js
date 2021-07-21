@@ -10,4 +10,30 @@ function GetURLParameter() {
     }
 }
 
+function initCardNumberSplit() {
+    let CardNumInput = document.getElementById('cNum');
+    CardNumInput.addEventListener('input', function (e) {
+        let foo = CardNumInput.value.split("-").join("");
+        foo = foo.replace(/\D/g,'');
+        if (foo.length > 0) {
+            foo = foo.match(new RegExp('.{1,4}', 'g')).join("-");
+        }
+        CardNumInput.value = foo;
+    });
+}
+
+function initExpirationDateSplit() {
+    let ExpDateInput = document.getElementById('expDate');
+    ExpDateInput.addEventListener('input', function (e) {
+        let foo = ExpDateInput.value.split("/").join("");
+        foo = foo.replace(/\D/g,'');
+        if (foo.length > 0) {
+            foo = foo.match(new RegExp('.{1,2}', 'g')).join("/");
+        }
+        ExpDateInput.value = foo;
+    });
+}
+
 GetURLParameter();
+initCardNumberSplit();
+initExpirationDateSplit();

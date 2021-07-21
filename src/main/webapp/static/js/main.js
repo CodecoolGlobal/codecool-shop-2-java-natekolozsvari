@@ -431,7 +431,7 @@ function initLogInModal() {
 
 function initLogOut() {
     let logOutButton = document.getElementById("logout-btn")
-    if (sessionStorage.getItem("loggedin") !== "false") {
+    if (sessionStorage.getItem("loggedIn") !== "true") {
         logOutButton.style.display = "none";
     }
 }
