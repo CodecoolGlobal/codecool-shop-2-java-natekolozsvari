@@ -119,11 +119,17 @@
 
 <div id="signUpModal" class="modal">
     <div class="modal-content">
-        <h4 style="margin: 0 auto">Sign up</h4>
+        <h4 style="margin: 0 auto; padding-bottom: 10px">Sign up</h4>
         <form name="signUpForm" id="signUpForm" method="post" action="/signup">
-            <label for="name">Username</label>
+            <div>
+                <label for="name" style="display: inline-block">Username</label>
+                <p id="signup-name-invalid" style="color: red; font-size: 12px; float: right; display: none; padding-top: 3px">This username is already taken!</p>
+            </div>
             <input type="text" id="name" name="name" required />
-            <label for="email">Email</label>
+            <div>
+                <label for="email" style="display: inline-block">Email</label>
+                <p id="signup-email-invalid" style="color: red; font-size: 12px; float: right; display: none; padding-top: 3px">This email is already taken!</p>
+            </div>
             <input type="email" id="email" name="email" required />
             <label for="pw">Password</label>
             <input type="password" id="pw" name="pw" required />
@@ -157,6 +163,7 @@
         <h4 style="margin: 0 auto">Log in</h4>
         <form name="logInForm" method="post">
             <label for="logInEmail">Email</label>
+
             <input type="email" id="logInEmail" name="email">
             <label for="logInPw">Password</label>
             <input type="password" id="logInPw" name="pw">
