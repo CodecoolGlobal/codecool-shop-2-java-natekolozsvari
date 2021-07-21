@@ -8,6 +8,7 @@ import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.Product;
 import com.google.gson.Gson;
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = {"/signup/validate"})
-public class SignUpValidation extends HttpServlet {
+@WebServlet(urlPatterns = {"/login/validate"})
+public class LogInValidation extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(UpdateCartServlet.class);
 
 
@@ -32,16 +33,18 @@ public class SignUpValidation extends HttpServlet {
         PrintWriter out = response.getWriter();
         ShopDatabaseManager dbManager = ShopDatabaseManager.getInstance();
 
-        String name = request.getParameter("name");
         String email = request.getParameter("email");
+        String pw = request.getParameter("pw");
 
-        boolean nameTaken = dbManager.doesNameExist(name);
-        boolean emailTaken = dbManager.doesEmailExist(email);
+        boolean valid;
+        String hashedPw = dbManager.getPasswordForEmail(email);
+        valid = !hashedPw.equals("") && BCrypt.checkpw(pw, hashedPw);
 
 
-        String json = "{\"name\":"+nameTaken+",\"email\":"+emailTaken+"}";
+
+        String json = "{\"valid\":"+valid+"}";
         out.println(json);
-        logger.info("Successfully validated registration info");
+        logger.info("Successfully validated login info");
     }
 
 }

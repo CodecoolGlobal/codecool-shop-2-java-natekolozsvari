@@ -104,16 +104,11 @@ public class UserDaoJdbc implements UserDao {
     public boolean doesNameExist(String name) {
         try (Connection conn = dataSource.getConnection()) {
             ResultSet rs;
-            String sql = "SELECT COUNT(id) AS c FROM users WHERE users.name LIKE ?;";
+            String sql = "SELECT id FROM users WHERE users.name = ?;";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, name);
-
             rs = st.executeQuery();
-            rs.next();
-            int count = rs.getInt("c");
-            rs.close();
-            System.out.println(count);
-            return count > 0;
+            return rs.next();
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -134,4 +129,52 @@ public class UserDaoJdbc implements UserDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public String getPasswordForEmail(String email) {
+        try (Connection conn = dataSource.getConnection()) {
+            ResultSet rs;
+            String sql = "SELECT password FROM users WHERE users.email = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, email);
+            rs = st.executeQuery();
+            String pw = "";
+            if(rs.next()) {
+                pw = rs.getString(1);
+                System.out.println(pw);
+            }
+            return pw;
+
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    @Override
+    public User getUserByEmail(String email) {
+        try (Connection conn = dataSource.getConnection()) {
+            ResultSet rs;
+            String sql = "SELECT id, name, password, reg_date FROM users WHERE users.email = ?;";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, email);
+            rs = st.executeQuery();
+            rs.next();
+            int id = rs.getInt(1);
+            String name = rs.getString(2);
+            String password = rs.getString(3);
+            Date regDate = rs.getDate(4);
+            User user = new User(name, email, password);
+            user.setRegDate(regDate);
+            user.setId(id);
+            return user;
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

@@ -40,16 +40,10 @@
 </head>
 
 <header>
-
-
-
-
-
-
 </header>
 <body>
 
-
+<input id='mv' type='hidden' th:value='${session.isEmpty()}'/>
 
 <div id="mySidenav" class="sidenav">
     <h1 style="text-align: center; color: white; font-size: 48px;">Filter by</h1>
@@ -93,10 +87,15 @@
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
 
-    <a id="signup-btn" class="login" href="#">Signup</a>
-    <a id="login-btn" class="login" href="#">Login</a>
-    <a id="logout-btn" class="login" href="#">Log Out</a>
 
+    <div th:if="${session.isEmpty()}">
+        <a id="signup-btn" class="login" href="#">Signup</a>
+        <a id="login-btn" class="login" href="#">Login</a>
+    </div>
+    <div th:unless="${session.isEmpty()}">
+        <a id="logout-btn" class="login" href="/logout">Log Out</a>
+        <a id="logged-in-text" style="cursor: default; color: white" class="login" th:text="'Logged in as ' + ${session.user.getName()}">Username</a>
+    </div>
         <a class="shopcart" href="#">
             <i class="fas fa-shopping-cart cart-button"></i>
             <i class="cart-size" th:data-value="${cartSize}"></i>
@@ -144,37 +143,26 @@
         </div>
 </div>
 
-<!--<script type="text/javascript">-->
-<!--    async function validateSignUp() {-->
-<!--        let name = document.getElementById("name").value;-->
-<!--        let email = document.getElementById("email").value;-->
-<!--        let fetchParam = `?name=${name}&email=${email}`-->
-<!--        let obj = await fetch(`/validate${fetchParam}`)-->
-<!--            .then(response => response.json())-->
-<!--            .catch(error => console.log(error));-->
-<!--        console.log(obj);-->
-<!--        console.log(!(obj[name] === true || obj[email] === true))-->
-<!--        return !(obj[name] === true || obj[email] === true);-->
-<!--    }-->
-<!--</script>-->
 
 <div id="logInModal" class="modal">
     <div class="modal-content">
-        <h4 style="margin: 0 auto">Log in</h4>
-        <form name="logInForm" method="post">
+        <h4 style="margin: 0 auto; padding-bottom: 10px">Log in</h4>
+        <form name="logInForm" id="logInForm" method="post" action="/login">
             <label for="logInEmail">Email</label>
 
             <input type="email" id="logInEmail" name="email">
             <label for="logInPw">Password</label>
             <input type="password" id="logInPw" name="pw">
         </form>
-        <br>
+        <div>
+        <p id="login-invalid" style="color: red; font-size: 12px; float: right; display: none">Wrong email or password!</p>
+        </div>
         <span class="no-acc" style="color: grey">I do not have an account</span>
         <br>
         <div>
             <span class="close">Close</span>
-            <span style="float: left;font-size: 16px;
-    font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Log in</span></div>
+            <button type="submit" form="logInForm" style="float: left;
+            font-weight: bold; cursor:pointer;text-decoration: none;" class="register">Log in</button></div>
     </div>
 </div>
 

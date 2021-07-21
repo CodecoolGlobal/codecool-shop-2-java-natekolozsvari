@@ -49,7 +49,13 @@ public class ShopDatabaseManager {
 
     public boolean doesEmailExist(String email) {
         return userDao.doesEmailExist(email);
+    }
 
+    public String getPasswordForEmail(String email) {
+        return userDao.getPasswordForEmail(email);    }
+
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
     }
 
     public ProductDaoJdbc getProductDao() {

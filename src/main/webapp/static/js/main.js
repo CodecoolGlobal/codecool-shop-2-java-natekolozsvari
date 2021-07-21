@@ -24,10 +24,9 @@ window.onload = () => {
     initButtons();
     initSideBar();
     // initCartEventListener();
+    cartHoverListener();
     initSignUpModal();
     initLogInModal();
-    cartHoverListener();
-    initLogOut();
 }
 
 function initButtons() {
@@ -213,7 +212,6 @@ function showCartItems(items) {
         let modal = document.getElementById("myModal");
         let checkout = document.querySelector(".checkout");
         let minusBtns = document.querySelectorAll("#minusBtn");
-        console.log(minusBtns)
         let plusBtns = document.querySelectorAll("#plusBtn");
         let inputFields = document.querySelectorAll(".amountOfItem");
         let emptyCart = document.querySelector(".empty_cart");
@@ -374,7 +372,7 @@ async function validateSignUp(event) {
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     let fetchParam = `?name=${name}&email=${email}`
-    let obj = await fetch(`/validate${fetchParam}`)
+    let obj = await fetch(`/signup/validate${fetchParam}`)
         .then(response => response.json())
         .catch(error => console.log(error));
     let valid = !(obj['name'] === true || obj['email'] === true);
@@ -441,17 +439,29 @@ function initLogInModal() {
             modal.style.display = "none";
         }
     }
-}
 
-function initLogOut() {
-    let logOutButton = document.getElementById("logout-btn")
-    if (sessionStorage.getItem("loggedin") !== "true") {
-        logOutButton.style.display = "none";
-    }
-    logOutButton.addEventListener('click', function () {
-        sessionStorage.setItem('loggedin', "false");
-        logOutButton.style.display = "none";
-        let btn = document.getElementById("login-btn");
-        btn.style.display = 'block';
+    let form = document.getElementById('logInForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        validateLogIn(event);
     })
 }
+
+async function validateLogIn(event) {
+    let form = document.getElementById('logInForm');
+
+    let email = document.getElementById("logInEmail").value;
+    let pw = document.getElementById("logInPw").value;
+    let fetchParam = `?email=${email}&pw=${pw}`
+    let obj = await fetch(`/login/validate${fetchParam}`)
+        .then(response => response.json())
+        .catch(error => console.log(error));
+    let valid = obj['valid'];
+    if(valid) {
+        form.submit();
+    } else {
+        document.getElementById('login-invalid').style.display = 'block';
+    }
+}
+
+
