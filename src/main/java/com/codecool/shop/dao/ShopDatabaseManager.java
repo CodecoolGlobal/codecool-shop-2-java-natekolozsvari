@@ -1,8 +1,12 @@
 package com.codecool.shop.dao;
 
+<<<<<<< HEAD
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.UserDaoJdbc;
 import com.codecool.shop.model.User;
+=======
+import com.codecool.shop.dao.implementation.ProductDaoJdbc;
+>>>>>>> development
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
@@ -17,7 +21,7 @@ public class ShopDatabaseManager {
     private static final String DB_NAME = "database";
     private static final String DB_USERNAME = "user";
     private static final String DB_PASSWORD = "password";
-    private static final String DB_CONNECTION = "dao";
+    private ProductDaoJdbc productDao = null;
 
     private UserDao userDao;
     private static ShopDatabaseManager instance = null;
@@ -34,6 +38,7 @@ public class ShopDatabaseManager {
     public void setup() throws SQLException, IOException {
         DataSource dataSource = connect();
         userDao = new UserDaoJdbc(dataSource);
+        productDao = new ProductDaoJdbc(dataSource);
     }
 
 
@@ -47,6 +52,11 @@ public class ShopDatabaseManager {
 
     public boolean doesEmailExist(String email) {
         return userDao.doesEmailExist(email);
+
+    }
+
+    public ProductDaoJdbc getProductDao() {
+        return productDao;
     }
 
     private DataSource connect() throws SQLException, IOException {
@@ -61,6 +71,7 @@ public class ShopDatabaseManager {
         System.out.println(user);
         System.out.println(password);
         System.out.println(url);
+
 
         dataSource.setDatabaseName(dbName);
         dataSource.setUser(user);

@@ -64,7 +64,11 @@ CREATE TABLE  billingInfo (
     country text NOT NULL,
     address text NOT NULL,
     city text NOT NULL,
-    zip_code integer NOT NULL
+    zip_code integer NOT NULL,
+    card_name text NOT NULL,
+    card_number text NOT NULL,
+    expiration_date date NOT NULL,
+    cvv integer NOT NULL
 );
 
 ALTER TABLE ONLY products

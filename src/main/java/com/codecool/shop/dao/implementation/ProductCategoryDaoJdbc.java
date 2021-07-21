@@ -1,7 +1,10 @@
 package com.codecool.shop.dao.implementation;
 
+import com.codecool.shop.controller.PaymentController;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -10,6 +13,7 @@ import java.util.List;
 
 public class ProductCategoryDaoJdbc implements ProductCategoryDao {
     private DataSource dataSource;
+    private static final Logger logger = LoggerFactory.getLogger(ProductCategoryDaoJdbc.class);
 
     public ProductCategoryDaoJdbc(DataSource dataSource){
         this.dataSource = dataSource;
@@ -29,7 +33,9 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
             category.setId(resultSet.getInt(1));
+            logger.info("Successfully inserted product category");
         } catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
     }
@@ -47,9 +53,11 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             String department = rs.getString(3);
             ProductCategory productCategory = new ProductCategory(name, description, department);
             productCategory.setId(id);
+            logger.info("Successfully found product category");
             return productCategory;
         }
         catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
     }
@@ -61,8 +69,10 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             st.executeQuery();
+            logger.info("Successfully removed product category");
         }
         catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
     }
@@ -83,9 +93,11 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
                 productCategory.setId(id);
                 result.add(productCategory);
             }
+            logger.info("Successfully found all product categories");
             return result;
         }
         catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
     }

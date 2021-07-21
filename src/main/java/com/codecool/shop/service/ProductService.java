@@ -30,7 +30,7 @@ public class ProductService {
 
     public List<Product> getProductsForCategory(int categoryId) {
         var category = productCategoryDao.find(categoryId);
-        return productDao.getBy(category);
+        return productDao.getByCategory(category);
     }
 
     public List<ProductCategory> getAllProductsCategory() {
