@@ -58,7 +58,7 @@ public class ProductDaoJdbc implements ProductDao {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            
+
             Product product = new Product(rs.getString(1),  rs.getFloat(3), rs.getString(2), rs.getString(4), new ProductCategory(rs.getString(5), rs.getString(6)),new Supplier(rs.getString(7)));
             product.setId(id);
             return product;
