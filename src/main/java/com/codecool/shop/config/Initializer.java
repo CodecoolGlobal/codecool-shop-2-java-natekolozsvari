@@ -30,14 +30,12 @@ public class Initializer implements ServletContextListener {
         ShopDatabaseManager shopDatabaseManager = null;
         Properties properties = new Properties();
         try {
-            shopDatabaseManager.setup();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            properties.load(new FileInputStream("src/main/resources/connection.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         String dataManagerType = properties.getProperty("dao");
-        System.out.println(dataManagerType);
+
         if(dataManagerType.equals("mem")){
         productDataStore = ProductDaoMem.getInstance();
         productCategoryDataStore = ProductCategoryDaoMem.getInstance();
