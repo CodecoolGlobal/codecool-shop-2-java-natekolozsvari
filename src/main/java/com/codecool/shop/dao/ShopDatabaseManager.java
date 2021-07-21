@@ -1,12 +1,9 @@
 package com.codecool.shop.dao;
 
-<<<<<<< HEAD
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.UserDaoJdbc;
 import com.codecool.shop.model.User;
-=======
 import com.codecool.shop.dao.implementation.ProductDaoJdbc;
->>>>>>> development
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;

@@ -359,28 +359,39 @@ function initSignUpModal() {
     }
 
     let form = document.getElementById('signUpForm');
-    form.addEventListener('submit', event => {
-        let name = document.getElementById("name").value;
-        let email = document.getElementById("email").value;
-        let fetchParam = `?name=${name}&email=${email}`
-        let valid = validateSignUp(fetchParam);
-        if(!valid) {
-            event.preventDefault();
-            console.log('prevented');
-        } else {
-            console.log('submitted');
-        }
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        validateSignUp(event);
+
     })
 
 }
 
-async function validateSignUp(fetchParam) {
+async function validateSignUp(event) {
+    let form = document.getElementById('signUpForm');
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let fetchParam = `?name=${name}&email=${email}`
     let obj = await fetch(`/validate${fetchParam}`)
         .then(response => response.json())
         .catch(error => console.log(error));
-    console.log(obj);
-    console.log(!(obj[name] === true || obj[email] === true))
-    return !(obj[name] === true || obj[email] === true);
+    let valid = !(obj['name'] === true || obj['email'] === true);
+    if(valid) {
+        form.submit();
+    } else {
+        if(obj['name'] === true){
+            document.getElementById('signup-name-invalid').style.display = 'inline-block';
+        } else {
+            document.getElementById('signup-name-invalid').style.display = 'none';
+        }
+        if(obj['email'] === true){
+            document.getElementById('signup-email-invalid').style.display = 'inline-block';
+        } else {
+            document.getElementById('signup-email-invalid').style.display = 'none';
+        }
+    }
 }
 
 function initLogInModal() {
