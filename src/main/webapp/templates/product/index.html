@@ -40,16 +40,10 @@
 </head>
 
 <header>
-
-
-
-
-
-
 </header>
 <body>
 
-
+<input id='mv' type='hidden' th:value='${session.isEmpty()}'/>
 
 <div id="mySidenav" class="sidenav">
     <h1 style="text-align: center; color: white; font-size: 48px;">Filter by</h1>
@@ -93,10 +87,14 @@
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
 
-    <a id="signup-btn" class="login" href="#">Signup</a>
-    <a id="login-btn" class="login" href="#">Login</a>
-    <a id="logout-btn" class="login" href="#">Log Out</a>
 
+    <div th:if="${session.isEmpty()}">
+        <a id="signup-btn" class="login" href="#">Signup</a>
+        <a id="login-btn" class="login" href="#">Login</a>
+    </div>
+    <div th:unless="${session.isEmpty()}">
+        <a id="logout-btn" class="login" href="#">Log Out</a>
+    </div>
         <a class="shopcart" href="#">
             <i class="fas fa-shopping-cart cart-button"></i>
             <i class="cart-size" th:data-value="${cartSize}"></i>
@@ -148,7 +146,7 @@
 <div id="logInModal" class="modal">
     <div class="modal-content">
         <h4 style="margin: 0 auto; padding-bottom: 10px">Log in</h4>
-        <form name="logInForm" id="logInForm" method="post" action="/signup">
+        <form name="logInForm" id="logInForm" method="post" action="/login">
             <label for="logInEmail">Email</label>
 
             <input type="email" id="logInEmail" name="email">

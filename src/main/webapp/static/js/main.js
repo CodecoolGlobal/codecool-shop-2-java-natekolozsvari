@@ -27,7 +27,7 @@ window.onload = () => {
     initSignUpModal();
     initLogInModal();
     cartHoverListener();
-    initLogOut();
+    initLogButtons();
 }
 
 function initButtons() {
@@ -213,7 +213,6 @@ function showCartItems(items) {
         let modal = document.getElementById("myModal");
         let checkout = document.querySelector(".checkout");
         let minusBtns = document.querySelectorAll("#minusBtn");
-        console.log(minusBtns)
         let plusBtns = document.querySelectorAll("#plusBtn");
         let inputFields = document.querySelectorAll(".amountOfItem");
         let emptyCart = document.querySelector(".empty_cart");
@@ -465,9 +464,23 @@ async function validateLogIn(event) {
 
 
 
-function initLogOut() {
-    let logOutButton = document.getElementById("logout-btn")
-    if (sessionStorage.getItem("loggedIn") !== "true") {
-        logOutButton.style.display = "none";
-    }
-}
+// function initLogButtons() {
+//     let logOutButton = document.getElementById("logout-btn");
+//     let logInButton = document.getElementById("login-btn");
+//     let signUpButton = document.getElementById("signup-btn");
+//     let loggedIn = !document.getElementById('mv').value;
+//     console.log(document.getElementById('mv').value);
+//     console.log(!(document.getElementById('mv').value));
+//
+//
+//     if (!loggedIn) {
+//         logOutButton.style.display = "none";
+//         logInButton.style.display = "block";
+//         signUpButton.style.display = "block";
+//     } else {
+//         logOutButton.style.display = "block";
+//         logInButton.style.display = "none";
+//         signUpButton.style.display = "none";
+//
+//     }
+// }
