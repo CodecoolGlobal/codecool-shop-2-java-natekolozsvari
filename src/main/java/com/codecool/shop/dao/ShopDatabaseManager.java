@@ -87,10 +87,6 @@ public class ShopDatabaseManager {
         String user = properties.getProperty(DB_USERNAME);
         String password = properties.getProperty(DB_PASSWORD);
         String url = properties.getProperty(DB_URL);
-        System.out.println(dbName);
-        System.out.println(user);
-        System.out.println(password);
-        System.out.println(url);
 
 
         dataSource.setDatabaseName(dbName);
