@@ -41,7 +41,7 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         supplierDataStore = SupplierDaoMem.getInstance();}
         else if(dataManagerType.equals("jdbc")){
-            shopDatabaseManager = new ShopDatabaseManager();
+            shopDatabaseManager = ShopDatabaseManager.getInstance();
             try {
                 shopDatabaseManager.setup();
             } catch (SQLException | IOException throwables) {

@@ -27,7 +27,7 @@ window.onload = () => {
     cartHoverListener();
     initSignUpModal();
     initLogInModal();
-    initLogOut();
+    // initLogOut();
 }
 
 function initButtons() {
