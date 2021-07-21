@@ -2,6 +2,7 @@ package com.codecool.shop.config;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.ShopDatabaseManager;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
@@ -13,15 +14,46 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Properties;
 
 @WebListener
 public class Initializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+        ProductDao productDataStore = null;
+        ProductCategoryDao productCategoryDataStore = null;
+        SupplierDao supplierDataStore = null;
+        ShopDatabaseManager shopDatabaseManager = null;
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("src/main/resources/connection.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String dataManagerType = properties.getProperty("dao");
+        System.out.println(dataManagerType);
+        if(dataManagerType.equals("mem")){
+        productDataStore = ProductDaoMem.getInstance();
+        productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        supplierDataStore = SupplierDaoMem.getInstance();}
+        else if(dataManagerType.equals("jdbc")){
+            shopDatabaseManager = new ShopDatabaseManager();
+            try {
+                shopDatabaseManager.setup();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            productDataStore = shopDatabaseManager.getProductDao();
+            productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+            supplierDataStore = SupplierDaoMem.getInstance();
+
+        }
 
         //setting up a new supplier
         Supplier garrison = new Supplier("Garrison Corp.", "Mr. Garrison's Corporation supplier of futuristic vehicles");
