@@ -1,13 +1,13 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.UserOrderDao;
-import com.codecool.shop.model.Supplier;
 import com.codecool.shop.service.UserOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +29,6 @@ public class UserOrderDaoJdbc implements UserOrderDao {
             statement.setString(3, expDate);
             statement.setString(4, cvv);
             statement.executeUpdate();
-
         }
         catch (SQLException e) {
             logger.warn("Runtime exception was thrown");
@@ -73,7 +72,7 @@ public class UserOrderDaoJdbc implements UserOrderDao {
     @Override
     public UserOrder find(int id) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT name, email, phonenumber, country, dress, city zip_code FROM billingInfo WHERE id = ?";
+            String sql = "SELECT name, email, phonenumber, country, dress, city, zip_code FROM billingInfo WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -106,6 +105,20 @@ public class UserOrderDaoJdbc implements UserOrderDao {
 
     @Override
     public List<UserOrder> getAll() {
-        return null;
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "SELECT id, name, email, phonenumber, country, dress, city, zip_code FROM billingInfo";
+            ResultSet resultSet = connection.createStatement().executeQuery(sql);
+            List<UserOrder> result = new ArrayList<>();
+            while (resultSet.next()) {
+                UserOrder userOrder = new UserOrder(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getString(8));
+                result.add(userOrder);
+            }
+            logger.info("Successfully found all userOrder");
+            return result;
+        }
+        catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
+            throw new RuntimeException(e);
+        }
     }
 }
