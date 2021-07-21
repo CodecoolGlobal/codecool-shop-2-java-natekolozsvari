@@ -28,6 +28,7 @@ public class UserOrderDaoJdbc implements UserOrderDao {
             statement.setString(2, cNum);
             statement.setString(3, expDate);
             statement.setString(4, cvv);
+            statement.executeUpdate();
 
         }
         catch (SQLException e) {
@@ -57,7 +58,7 @@ public class UserOrderDaoJdbc implements UserOrderDao {
             statement.setString(6, userOrder.getAddress());
             statement.setString(7, userOrder.getCity());
             statement.setString(8, userOrder.getZip());
-
+            statement.executeUpdate();
 
             ResultSet resultset = statement.getGeneratedKeys();
             resultset.next();
@@ -89,6 +90,17 @@ public class UserOrderDaoJdbc implements UserOrderDao {
 
     @Override
     public void remove(int id) {
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "DELETE FROM billingInfo WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.executeQuery();
+            logger.info("Successfully removed userOrder");
+        }
+        catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
+            throw new RuntimeException(e);
+        }
 
     }
 
