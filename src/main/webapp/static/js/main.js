@@ -374,7 +374,7 @@ async function validateSignUp(event) {
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     let fetchParam = `?name=${name}&email=${email}`
-    let obj = await fetch(`/validate${fetchParam}`)
+    let obj = await fetch(`/signup/validate${fetchParam}`)
         .then(response => response.json())
         .catch(error => console.log(error));
     let valid = !(obj['name'] === true || obj['email'] === true);
@@ -438,7 +438,32 @@ function initLogInModal() {
             modal.style.display = "none";
         }
     }
+
+    let form = document.getElementById('logInForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        validateLogIn(event);
+    })
 }
+
+async function validateLogIn(event) {
+    let form = document.getElementById('logInForm');
+
+    let email = document.getElementById("logInEmail").value;
+    let pw = document.getElementById("logInPw").value;
+    let fetchParam = `?email=${email}&pw=${pw}`
+    let obj = await fetch(`/login/validate${fetchParam}`)
+        .then(response => response.json())
+        .catch(error => console.log(error));
+    let valid = obj['valid'];
+    if(valid) {
+        form.submit();
+    } else {
+        document.getElementById('login-invalid').style.display = 'block';
+    }
+}
+
+
 
 function initLogOut() {
     let logOutButton = document.getElementById("logout-btn")

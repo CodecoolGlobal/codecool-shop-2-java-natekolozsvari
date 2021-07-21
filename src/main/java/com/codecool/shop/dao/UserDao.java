@@ -13,5 +13,5 @@ public interface UserDao {
     List<User> getAll();
     boolean doesNameExist(String name);
     boolean doesEmailExist(String email);
-
+    String getPasswordForEmail(String email);
 }
