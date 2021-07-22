@@ -1,13 +1,8 @@
 package com.codecool.shop.dao;
 
 
-import com.codecool.shop.dao.implementation.ProductCategoryDaoJdbc;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.UserDaoJdbc;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.User;
-import com.codecool.shop.dao.implementation.ProductDaoJdbc;
-import com.codecool.shop.dao.implementation.SupplierDaoJdbc;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
@@ -25,6 +20,7 @@ public class ShopDatabaseManager {
     private ProductDaoJdbc productDao = null;
     private SupplierDaoJdbc supplierDao = null;
     private ProductCategoryDaoJdbc categoryDao = null;
+    private UserOrderDaoJdbc userOrderDao = null;
 
     private UserDao userDao;
     private static ShopDatabaseManager instance = null;
@@ -44,6 +40,7 @@ public class ShopDatabaseManager {
         supplierDao = new SupplierDaoJdbc(dataSource);
         categoryDao = new ProductCategoryDaoJdbc(dataSource);
         userDao = new UserDaoJdbc(dataSource);
+        userOrderDao = new UserOrderDaoJdbc(dataSource);
     }
 
     public void addUser(User user) {
@@ -75,6 +72,10 @@ public class ShopDatabaseManager {
 
     public ProductCategoryDaoJdbc getCategoryDao() {
         return categoryDao;
+    }
+
+    public UserOrderDaoJdbc getUserOrderDao() {
+        return userOrderDao;
     }
 
     private DataSource connect() throws SQLException, IOException {

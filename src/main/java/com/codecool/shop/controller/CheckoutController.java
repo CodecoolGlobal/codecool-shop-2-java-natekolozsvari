@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.ShopDatabaseManager;
 import com.codecool.shop.dao.UserOrderDao;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
@@ -20,9 +21,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.Properties;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -47,6 +51,29 @@ public class CheckoutController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserOrderDao  userOrderDao = null;
+        ShopDatabaseManager shopDatabaseManager;
+
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("src/main/resources/connection.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String dataManagerType = properties.getProperty("dao");
+        System.out.println(dataManagerType);
+        if(dataManagerType.equals("mem")){
+            userOrderDao = UserOrderDaoMem.getInstance();}
+        else if(dataManagerType.equals("jdbc")){
+            shopDatabaseManager = ShopDatabaseManager.getInstance();
+            try {
+                shopDatabaseManager.setup();
+            } catch (SQLException | IOException throwables) {
+                throwables.printStackTrace();
+            }
+            userOrderDao = shopDatabaseManager.getUserOrderDao();
+        }
+
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String phoneNumber = req.getParameter("phoneNumber");
@@ -55,7 +82,7 @@ public class CheckoutController extends HttpServlet {
         String city = req.getParameter("city");
         String zip = req.getParameter("zip");
         UserOrder userOrder = new UserOrder(id, name, email, phoneNumber, country, address, city, zip);
-        UserOrderDao userOrderDao = UserOrderDaoMem.getInstance();
+
         userOrderDao.add(userOrder);
         resp.sendRedirect(req.getContextPath() + "/payment?order_id=" + id);
         logger.info("Successfully added checkout info to order");
