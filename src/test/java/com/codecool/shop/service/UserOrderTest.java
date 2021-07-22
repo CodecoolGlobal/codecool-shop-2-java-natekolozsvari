@@ -19,7 +19,8 @@ public class UserOrderTest {
 
     @Test
     void getId() {
-        assertEquals(0, userOrder.getId());
+        userOrder.setId(1);
+        assertEquals(1, userOrder.getId());
     }
 
     @Test
