@@ -7,10 +7,11 @@ import automated_tests.page_factory.NavbarPage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestCart {
@@ -21,7 +22,7 @@ public class TestCart {
     CartPage cartPage;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
         TestingHelper.setUp(driver, "http://localhost:8888/");
         homePage = new HomePage(driver);
         navbarPage = new NavbarPage(driver);
@@ -30,17 +31,22 @@ public class TestCart {
 
     @AfterEach
     void tearDown() {
+        navbarPage.clickOnCartButton();
+//        cartPage.clickOnEmptyCartButton();
         driver.close();
         driver.quit();
     }
-
 
     @Test
     public void addProductToCart_priceInCartIsEqualToPriceInHomePage(){
         homePage.waitUntilHomePageIsClickable();
         homePage.clickOnElmoAddToCart();
+        String homePagePrice = homePage.getElmoPriceFromHomePage();
+        navbarPage.waitUntilCartButtonIsClickable();
         navbarPage.clickOnCartButton();
-        assertEquals(homePage.getElmoPriceFromHomePage(), cartPage.getElmoPriceFromCart());
+        cartPage.waitUntilCartElmoPriceIsVisible();
+        assertEquals(homePagePrice, cartPage.getElmoPriceFromCart());
+
     }
 
 

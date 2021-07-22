@@ -22,13 +22,13 @@ public class HomePage {
     @FindBy(xpath = "//div[@id='toys']/div/div/div[3]/div/p")
     WebElement elmoPrice;
 
-    @FindBy(xpath = "//div[@id='toys']/div[2]/div/div[3]/div/p")
+    @FindBy(xpath = "//body/div[@id='main']/div[2]/div[2]/div[1]/div[1]/div[3]/div[2]/a[1]")
     WebElement elmoAddToCart;
 
     @FindBy(xpath = "//div[@id='toys']/div[2]/div/div[3]/div/p")
     WebElement alabamaPrice;
 
-    @FindBy(xpath = "//div[@id='toys']/div/div/div[3]/div/p")
+    @FindBy(xpath = "//body/div[@id='main']/div[2]/div[2]/div[2]/div[1]/div[3]/div[2]/a[1]")
     WebElement alabamaAddToCart;
 
     @FindBy(xpath = "//div[@id='toys']/div[3]/div/div[3]/div/p")

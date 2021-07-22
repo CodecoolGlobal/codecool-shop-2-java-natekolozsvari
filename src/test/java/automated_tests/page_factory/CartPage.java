@@ -15,13 +15,18 @@ public class CartPage {
     WebDriver driver;
     WebDriverWait wait;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[3]/div[1]/div[1]/div[1]/p[1]/span[1]")
+    @FindBy(xpath = "//*[@id=\"itemPrice\"]")
     WebElement cartElmoPrice;
 
 
     @FindBy(xpath = "//body/div[@id='myModal']/div[1]/div[2]/div[1]/p[1]")
     WebElement cartAlabamaPrice;
 
+    @FindBy(css = ".empty_cart")
+    WebElement emptyCartButton;
+
+    @FindBy(css = ".close:nth-child(2)")
+    WebElement closeModalButton;
 
 
     public CartPage(WebDriver driver) {
@@ -30,12 +35,18 @@ public class CartPage {
     }
 
     public String getElmoPriceFromCart() {
+        System.out.println(cartElmoPrice.getText());
         return cartElmoPrice.getText();
     }
 
-    public void waitUntilCartElmoPriceIsClickable() {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.elementToBeClickable(cartElmoPrice));
+    public void waitUntilCartElmoPriceIsVisible() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.textToBePresentInElement(cartElmoPrice, "PRICE: 29.97 USD"));
     }
+
+    public void clickOnEmptyCartButton() {
+        emptyCartButton.click();
+    }
+
 
 }
