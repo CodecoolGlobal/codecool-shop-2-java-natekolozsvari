@@ -79,12 +79,46 @@ public class CheckoutPage {
 
     public void fillBillingAddressForm(String nameInput, String emailInput, String phoneNumberInput,
                                        String countryInput, String addressInput, String cityInput, String zipInput) {
-        fillNameField(nameInput);
-        fillEmailField(emailInput);
-        fillPhoneNumberField(phoneNumberInput);
-        fillCountryField(countryInput);
-        fillAddressField(addressInput);
-        fillCityField(cityInput);
-        fillZipField(zipInput);
+        if (nameInput != null) {
+            fillNameField(nameInput);
+        }
+        if (emailInput != null) {
+            fillEmailField(emailInput);
+        }
+        if (phoneNumberInput != null) {
+            fillPhoneNumberField(phoneNumberInput);
+        }
+        if (countryInput != null) {
+            fillCountryField(countryInput);
+        }
+        if (addressInput != null) {
+            fillAddressField(addressInput);
+        }
+        if (cityInput != null) {
+            fillCityField(cityInput);
+        } if (zipInput != null) {
+            fillZipField(zipInput);
+        }
+    }
+
+    public String fieldValidationMessageIsPresent(String field) {
+        switch (field) {
+            case "name":
+                return name.getAttribute("validationMessage");
+            case "email":
+                return email.getAttribute("validationMessage");
+            case "phoneNumber":
+                return phoneNumber.getAttribute("validationMessage");
+            case "country":
+                return country.getAttribute("validationMessage");
+            case "address":
+                return address.getAttribute("validationMessage");
+            case "city":
+                return city.getAttribute("validationMessage");
+            case "zip":
+                return zip.getAttribute("validationMessage");
+            default:
+                return "Invalid data";
+        }
     }
 }

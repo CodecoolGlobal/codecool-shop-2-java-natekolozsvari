@@ -37,5 +37,14 @@ public class TestCheckout {
         checkoutPage.clickPayWithCreditCard();
         assertTrue(paymentPage.paymentHeaderIsDisplayed());
     }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/missingCredentialsCheckoutData.csv", numLinesToSkip = 1)
+    void testCheckoutFormDisplaysErrorMessageOnMissingCredential(String name, String email, String phoneNumber,
+                                                      String country, String address, String city, String zip, String missingCredential) {
+        checkoutPage.fillBillingAddressForm(name, email, phoneNumber, country, address, city, zip);
+        checkoutPage.clickPayWithCreditCard();
+        assertEquals(checkoutPage.fieldValidationMessageIsPresent(missingCredential), "Please fill out this field.");
+    }
 }
 
