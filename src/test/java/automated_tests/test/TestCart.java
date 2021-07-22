@@ -3,9 +3,10 @@ package automated_tests.test;
 import automated_tests.page_factory.CartPage;
 import automated_tests.page_factory.HomePage;
 import automated_tests.page_factory.NavbarPage;
-import org.junit.Test;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -36,7 +37,7 @@ public class TestCart {
 
     @Test
     public void addProductToCart_priceInCartIsEqualToPriceInHomePage(){
-//        homePage.waitUntilHomePageIsClickable();
+        homePage.waitUntilHomePageIsClickable();
         homePage.clickOnElmoAddToCart();
         navbarPage.clickOnCartButton();
         assertEquals(homePage.getElmoPriceFromHomePage(), cartPage.getElmoPriceFromCart());
