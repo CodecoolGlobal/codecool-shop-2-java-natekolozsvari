@@ -29,4 +29,8 @@ public class NavbarPage {
     @FindBy(id = "signup-btn")
     WebElement signUpBtn;
 
+
+    public void clickOnCartButton() {
+        cartBtn.click();
+    }
 }
