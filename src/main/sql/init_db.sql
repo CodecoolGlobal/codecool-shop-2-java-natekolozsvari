@@ -64,7 +64,7 @@ CREATE TABLE  billingInfo (
     country text NOT NULL,
     address text NOT NULL,
     city text NOT NULL,
-    zip_code integer NOT NULL,
+    zip_code text NOT NULL,
     card_name text,
     card_number text,
     expiration_date text,

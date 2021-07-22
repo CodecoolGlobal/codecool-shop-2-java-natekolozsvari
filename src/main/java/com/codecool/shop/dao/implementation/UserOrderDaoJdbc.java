@@ -39,18 +39,18 @@ public class UserOrderDaoJdbc implements UserOrderDao {
     @Override
     public void add(UserOrder userOrder) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "INSERT INTO billingInfo (user_id, name, email, phonenumber, country, adress, city, zip_code) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO billingInfo (user_id, name, email, phonenumber, country, address, city, zip_code) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
             String getUserId = "SELECT id FROM users WHERE name = ?";
             PreparedStatement st = connection.prepareStatement(getUserId);
-            st.setString(1, userOrder.getcName());
+            st.setString(1, userOrder.getUsername());
             ResultSet rs = st.executeQuery();
             rs.next();
             int userId = rs.getInt(1);
 
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, userId);
-            statement.setString(2, userOrder.getcName());
+            statement.setString(2, userOrder.getUsername());
             statement.setString(3, userOrder.getEmail());
             statement.setString(4, userOrder.getPhoneNumber());
             statement.setString(5, userOrder.getCountry());
@@ -72,7 +72,7 @@ public class UserOrderDaoJdbc implements UserOrderDao {
     @Override
     public UserOrder find(int id) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT name, email, phonenumber, country, dress, city, zip_code FROM billingInfo WHERE id = ?";
+            String sql = "SELECT name, email, phonenumber, country, address, city, zip_code FROM billingInfo WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -106,7 +106,7 @@ public class UserOrderDaoJdbc implements UserOrderDao {
     @Override
     public List<UserOrder> getAll() {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT id, name, email, phonenumber, country, dress, city, zip_code FROM billingInfo";
+            String sql = "SELECT id, name, email, phonenumber, country, address, city, zip_code FROM billingInfo";
             ResultSet resultSet = connection.createStatement().executeQuery(sql);
             List<UserOrder> result = new ArrayList<>();
             while (resultSet.next()) {
