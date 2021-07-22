@@ -59,7 +59,7 @@ public class UpdateCartServlet extends HttpServlet {
         if(dataManagerType.equals("mem")){
             productDataStore = ProductDaoMem.getInstance();}
         else if(dataManagerType.equals("jdbc")){
-            shopDatabaseManager = new ShopDatabaseManager();
+            shopDatabaseManager = ShopDatabaseManager.getInstance();
             try {
                 shopDatabaseManager.setup();
             } catch (SQLException | IOException throwables) {
