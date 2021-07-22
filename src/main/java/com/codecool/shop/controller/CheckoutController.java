@@ -62,9 +62,9 @@ public class CheckoutController extends HttpServlet {
         }
         String dataManagerType = properties.getProperty("dao");
         System.out.println(dataManagerType);
-        if(dataManagerType.equals("mem")){
+        if(dataManagerType.equals("jdbc")){
             userOrderDao = UserOrderDaoMem.getInstance();}
-        else if(dataManagerType.equals("jdbc")){
+        else if(dataManagerType.equals("Not working")){
             shopDatabaseManager = ShopDatabaseManager.getInstance();
             try {
                 shopDatabaseManager.setup();
