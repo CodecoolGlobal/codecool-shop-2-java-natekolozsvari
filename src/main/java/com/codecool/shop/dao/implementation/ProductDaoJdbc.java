@@ -79,7 +79,9 @@ public class ProductDaoJdbc implements ProductDao {
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
             product.setId(resultSet.getInt(1));
+            logger.info("Successfully added product");
         } catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
 
         }
@@ -94,8 +96,10 @@ public class ProductDaoJdbc implements ProductDao {
             ResultSet rs = st.executeQuery();
             if (!rs.next()) return null;
             Product product = new Product(rs.getString(2),  rs.getFloat(4), rs.getString(5), rs.getString(3), new ProductCategory(rs.getString(6), rs.getString(7)),new Supplier(rs.getString(8)));            product.setId(id);
+            logger.info("Successfully found product");
             return product;
         } catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
     }
@@ -108,7 +112,9 @@ public class ProductDaoJdbc implements ProductDao {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             st.executeQuery();
+            logger.info("Successfully removed product");
         } catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
 
@@ -125,8 +131,10 @@ public class ProductDaoJdbc implements ProductDao {
                 Product product = new Product(rs.getString(2),  rs.getFloat(4), rs.getString(5), rs.getString(3), new ProductCategory(rs.getString(6), rs.getString(7)),new Supplier(rs.getString(8)));                product.setId(rs.getInt("id"));
                 result.add(product);
             }
+            logger.info("Successfully found all products");
             return result;
         } catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException("Error while reading all products", e);
         }
     }
@@ -144,8 +152,10 @@ public class ProductDaoJdbc implements ProductDao {
                 Product product = new Product(rs.getString(2),  rs.getFloat(4), rs.getString(5), rs.getString(3), new ProductCategory(rs.getString(6), rs.getString(7)),new Supplier(rs.getString(8)));                product.setId(rs.getInt("id"));
                 result.add(product);
             }
+            logger.info("Successfully found all products by supplier");
             return result;
         } catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException("Error while reading all products", e);
         }
     }
@@ -164,8 +174,10 @@ public class ProductDaoJdbc implements ProductDao {
                 Product product = new Product(rs.getString(2),  rs.getFloat(4), rs.getString(5), rs.getString(3), new ProductCategory(rs.getString(6), rs.getString(7)),new Supplier(rs.getString(8)));                product.setId(rs.getInt("id"));
                 result.add(product);
             }
+            logger.info("Successfully found all products by category");
             return result;
         } catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException("Error while reading all products", e);
         }
     }
@@ -180,8 +192,10 @@ public class ProductDaoJdbc implements ProductDao {
             if(!rs.next()) return null;
             Product product = new Product(rs.getString(2),  rs.getFloat(4), rs.getString(5), rs.getString(3), new ProductCategory(rs.getString(6), rs.getString(7)),new Supplier(rs.getString(8)));
             product.setId(rs.getInt("id"));
+            logger.info("Successfully found product by name");
             return product;
         } catch (SQLException e) {
+            logger.warn("Runtime exception was thrown");
             throw new RuntimeException(e);
         }
     }
