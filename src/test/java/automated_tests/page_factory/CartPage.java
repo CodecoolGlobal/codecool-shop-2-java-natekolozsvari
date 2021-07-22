@@ -15,14 +15,14 @@ public class CartPage {
     WebDriver driver;
     WebDriverWait wait;
 
-    @FindBy(xpath = "//*[@id=\"itemPrice\"]")
+    @FindBy(xpath = "//*[@id=\"itemPrice\"]/span")
     WebElement cartElmoPrice;
 
 
     @FindBy(xpath = "//body/div[@id='myModal']/div[1]/div[2]/div[1]/p[1]")
     WebElement cartAlabamaPrice;
 
-    @FindBy(css = ".empty_cart")
+    @FindBy(xpath = "//span[contains(text(),'Empty Cart')]")
     WebElement emptyCartButton;
 
     @FindBy(css = ".close:nth-child(2)")

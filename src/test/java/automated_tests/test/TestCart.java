@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,12 +28,12 @@ public class TestCart {
         homePage = new HomePage(driver);
         navbarPage = new NavbarPage(driver);
         cartPage = new CartPage(driver);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.body.style.zoom='67%'");
     }
 
     @AfterEach
     void tearDown() {
-        navbarPage.clickOnCartButton();
-//        cartPage.clickOnEmptyCartButton();
         driver.close();
         driver.quit();
     }
@@ -44,9 +45,9 @@ public class TestCart {
         String homePagePrice = homePage.getElmoPriceFromHomePage();
         navbarPage.waitUntilCartButtonIsClickable();
         navbarPage.clickOnCartButton();
-        cartPage.waitUntilCartElmoPriceIsVisible();
-        assertEquals(homePagePrice, cartPage.getElmoPriceFromCart());
-
+//        cartPage.waitUntilCartElmoPriceIsVisible();
+        assertEquals(homePagePrice, cartPage.getElmoPriceFromCart() + " USD");
+        cartPage.clickOnEmptyCartButton();
     }
 
 
