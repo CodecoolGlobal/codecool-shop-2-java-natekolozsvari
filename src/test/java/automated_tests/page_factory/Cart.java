@@ -9,6 +9,15 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 public class Cart {
     WebDriver driver;
 
+    @FindBy(xpath = "/html[1]/body[1]/div[3]/div[1]/div[1]/div[1]/p[1]/span[1]")
+    WebElement cartElmoPrice;
+
+
+    @FindBy(xpath = "//body/div[@id='myModal']/div[1]/div[2]/div[1]/p[1]")
+    WebElement cartAlabamaPrice;
+
+
+
     public Cart(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
