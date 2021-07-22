@@ -28,8 +28,6 @@ public class TestCart {
         homePage = new HomePage(driver);
         navbarPage = new NavbarPage(driver);
         cartPage = new CartPage(driver);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("document.body.style.zoom='67%'");
     }
 
     @AfterEach
@@ -45,9 +43,7 @@ public class TestCart {
         String homePagePrice = homePage.getElmoPriceFromHomePage();
         navbarPage.waitUntilCartButtonIsClickable();
         navbarPage.clickOnCartButton();
-//        cartPage.waitUntilCartElmoPriceIsVisible();
         assertEquals(homePagePrice, cartPage.getElmoPriceFromCart() + " USD");
-        cartPage.clickOnEmptyCartButton();
     }
 
 
